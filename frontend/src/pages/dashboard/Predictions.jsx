@@ -105,13 +105,12 @@ export default function Predictions() {
                 {/* Probability Progress Bar */}
                 <div className="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-800">
                   <div
-                    className={`h-full rounded-full transition-all duration-300 ${
-                      sig === 'BUY'
-                        ? 'bg-emerald-500'
-                        : sig === 'SELL'
+                    className={`h-full rounded-full transition-all duration-300 ${sig === 'BUY'
+                      ? 'bg-emerald-500'
+                      : sig === 'SELL'
                         ? 'bg-rose-500'
                         : 'bg-amber-500'
-                    }`}
+                      }`}
                     style={{ width: `${Math.min(100, Math.max(5, probPct))}%` }}
                   />
                 </div>

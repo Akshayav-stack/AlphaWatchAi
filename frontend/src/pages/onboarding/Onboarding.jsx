@@ -232,11 +232,10 @@ export default function Onboarding() {
         <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs font-semibold">
           <button
             onClick={() => setStep(1)}
-            className={`p-3 rounded-xl border text-left transition-all ${
-              step === 1
+            className={`p-3 rounded-xl border text-left transition-all ${step === 1
                 ? 'bg-blue-950/60 border-blue-600 text-white shadow-sm'
                 : 'bg-slate-900/40 border-slate-800 text-slate-400 hover:text-slate-200'
-            }`}
+              }`}
           >
             <span className="block text-[10px] text-blue-400 uppercase font-mono">Step 1</span>
             <span className="truncate block">Holdings Input</span>
@@ -245,11 +244,10 @@ export default function Onboarding() {
             onClick={() => {
               if (validateStep1()) setStep(2);
             }}
-            className={`p-3 rounded-xl border text-left transition-all ${
-              step === 2
+            className={`p-3 rounded-xl border text-left transition-all ${step === 2
                 ? 'bg-blue-950/60 border-blue-600 text-white shadow-sm'
                 : 'bg-slate-900/40 border-slate-800 text-slate-400 hover:text-slate-200'
-            }`}
+              }`}
           >
             <span className="block text-[10px] text-blue-400 uppercase font-mono">Step 2</span>
             <span className="truncate block">Fixed Questions</span>
@@ -257,11 +255,10 @@ export default function Onboarding() {
           <button
             disabled={!evaluation}
             onClick={() => evaluation && setStep(3)}
-            className={`p-3 rounded-xl border text-left transition-all ${
-              step === 3
+            className={`p-3 rounded-xl border text-left transition-all ${step === 3
                 ? 'bg-blue-950/60 border-blue-600 text-white shadow-sm'
                 : 'bg-slate-900/40 border-slate-800 text-slate-500 disabled:opacity-50'
-            }`}
+              }`}
           >
             <span className="block text-[10px] text-blue-400 uppercase font-mono">Step 3</span>
             <span className="truncate block">Investor Pattern</span>
@@ -419,9 +416,8 @@ export default function Onboarding() {
                             </td>
                             <td className="py-2 px-3">
                               <span
-                                className={`font-semibold ${
-                                  isConcentrated ? 'text-amber-400 font-bold' : 'text-slate-300'
-                                }`}
+                                className={`font-semibold ${isConcentrated ? 'text-amber-400 font-bold' : 'text-slate-300'
+                                  }`}
                               >
                                 {weight.toFixed(1)}%
                               </span>
@@ -641,8 +637,8 @@ export default function Onboarding() {
                         evaluation.suggested_profile === 'Conservative'
                           ? 'low'
                           : evaluation.suggested_profile === 'Aggressive'
-                          ? 'high'
-                          : 'medium'
+                            ? 'high'
+                            : 'medium'
                       }
                       label={evaluation.suggested_profile.toUpperCase()}
                     />
@@ -652,14 +648,14 @@ export default function Onboarding() {
                     {evaluation.suggested_profile === 'Conservative'
                       ? '0.65'
                       : evaluation.suggested_profile === 'Aggressive'
-                      ? '0.55'
-                      : '0.60'}
+                        ? '0.55'
+                        : '0.60'}
                     , SELL &le;{' '}
                     {evaluation.suggested_profile === 'Conservative'
                       ? '0.35'
                       : evaluation.suggested_profile === 'Aggressive'
-                      ? '0.45'
-                      : '0.40'}
+                        ? '0.45'
+                        : '0.40'}
                   </p>
                 </div>
 
@@ -675,13 +671,12 @@ export default function Onboarding() {
                   </div>
                   <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-1">
                     <div
-                      className={`h-full ${
-                        evaluation.risk_score > 65
+                      className={`h-full ${evaluation.risk_score > 65
                           ? 'bg-rose-500'
                           : evaluation.risk_score < 40
-                          ? 'bg-emerald-500'
-                          : 'bg-amber-500'
-                      }`}
+                            ? 'bg-emerald-500'
+                            : 'bg-amber-500'
+                        }`}
                       style={{ width: `${Math.min(100, Math.max(0, evaluation.risk_score))}%` }}
                     />
                   </div>

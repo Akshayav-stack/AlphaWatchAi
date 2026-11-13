@@ -100,9 +100,8 @@ export default function Overview() {
           </span>
           <div className="flex items-center gap-2">
             <span
-              className={`text-2xl font-black font-mono ${
-                isProfitable ? 'text-emerald-400' : 'text-rose-400'
-              }`}
+              className={`text-2xl font-black font-mono ${isProfitable ? 'text-emerald-400' : 'text-rose-400'
+                }`}
             >
               {isProfitable ? '+' : ''}₹
               {(valuation.unrealized_pnl || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

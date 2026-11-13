@@ -170,6 +170,24 @@ router.post('/', requireAuth, verifyCsrf, async (req, res, next) => {
 
     const now = new Date().toISOString();
 
+    // Sanitize and normalize all answers and evaluation values to primitive SQLite types
+    const goalVal = String(answers.goal || 'Wealth Creation');
+    const horizonVal = String(answers.horizon || '3-5 Years');
+    const experienceVal = String(answers.experience || 'Intermediate');
+    const frequencyVal = String(answers.trading_frequency || 'Monthly');
+    const reactionVal = String(answers.fall_reaction || 'Hold and observe');
+    const savingsVal = String(answers.savings_share || '10-25%');
+    const preferredSectorsVal = Array.isArray(answers.preferred_sectors)
+      ? answers.preferred_sectors.join(', ')
+      : String(answers.preferred_sectors || 'Technology, Financials');
+    const riskScoreVal = Number(evaluation.risk_score != null ? evaluation.risk_score : 50.0);
+    const suggestedProfileVal = String(evaluation.suggested_profile || 'Moderate');
+    const divScoreVal = Number(evaluation.diversification_score != null ? evaluation.diversification_score : 50.0);
+    const concentrationStatusVal = String(evaluation.concentration_status || 'Balanced');
+    const holdingStyleVal = String(evaluation.holding_style || 'Balanced Growth & Value');
+    const whyThisProfileVal = String(evaluation.why_this_profile || '');
+    const answersJsonVal = typeof answers === 'string' ? answers : JSON.stringify(answers);
+
     // Database updates in transaction
     const updateTransaction = () => {
       // 1. Replace holdings
@@ -199,20 +217,20 @@ router.post('/', requireAuth, verifyCsrf, async (req, res, next) => {
               why_this_profile = ?, answers_json = ?, updated_at = ?
           WHERE user_id = ?
         `).run(
-          answers.goal || 'Wealth Creation',
-          answers.horizon || '3-5 Years',
-          answers.experience || 'Intermediate',
-          answers.trading_frequency || 'Monthly',
-          answers.fall_reaction || 'Hold and observe',
-          answers.savings_share || '10-25%',
-          answers.preferred_sectors || 'Technology, Financials',
-          evaluation.risk_score,
-          evaluation.suggested_profile,
-          evaluation.diversification_score,
-          evaluation.concentration_status,
-          evaluation.holding_style,
-          evaluation.why_this_profile,
-          JSON.stringify(answers),
+          goalVal,
+          horizonVal,
+          experienceVal,
+          frequencyVal,
+          reactionVal,
+          savingsVal,
+          preferredSectorsVal,
+          riskScoreVal,
+          suggestedProfileVal,
+          divScoreVal,
+          concentrationStatusVal,
+          holdingStyleVal,
+          whyThisProfileVal,
+          answersJsonVal,
           now,
           req.user.id
         );
@@ -226,20 +244,20 @@ router.post('/', requireAuth, verifyCsrf, async (req, res, next) => {
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `).run(
           req.user.id,
-          answers.goal || 'Wealth Creation',
-          answers.horizon || '3-5 Years',
-          answers.experience || 'Intermediate',
-          answers.trading_frequency || 'Monthly',
-          answers.fall_reaction || 'Hold and observe',
-          answers.savings_share || '10-25%',
-          answers.preferred_sectors || 'Technology, Financials',
-          evaluation.risk_score,
-          evaluation.suggested_profile,
-          evaluation.diversification_score,
-          evaluation.concentration_status,
-          evaluation.holding_style,
-          evaluation.why_this_profile,
-          JSON.stringify(answers),
+          goalVal,
+          horizonVal,
+          experienceVal,
+          frequencyVal,
+          reactionVal,
+          savingsVal,
+          preferredSectorsVal,
+          riskScoreVal,
+          suggestedProfileVal,
+          divScoreVal,
+          concentrationStatusVal,
+          holdingStyleVal,
+          whyThisProfileVal,
+          answersJsonVal,
           now
         );
       }

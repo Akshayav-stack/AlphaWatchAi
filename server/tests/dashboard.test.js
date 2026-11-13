@@ -85,6 +85,7 @@ describe('AlphaWatch Onboarding & Dashboard Integration Tests', () => {
           trading_frequency: 'Monthly',
           fall_reaction: 'Hold and observe',
           savings_share: '10-25%',
+          preferred_sectors: ['Technology', 'Financials'],
         },
       }),
     });
