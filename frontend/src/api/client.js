@@ -173,3 +173,92 @@ export async function deleteAccountApi() {
     method: 'DELETE',
   });
 }
+
+// ----------------------------------------------------------------------------
+// Onboarding API Methods
+// ----------------------------------------------------------------------------
+
+export async function getOnboardingDataApi() {
+  return apiFetch('/onboarding');
+}
+
+export async function submitOnboardingApi(payload) {
+  return apiFetch('/onboarding', {
+    method: 'POST',
+    body: payload,
+  });
+}
+
+// ----------------------------------------------------------------------------
+// Dashboard API Methods
+// ----------------------------------------------------------------------------
+
+export async function getDashboardOverviewApi() {
+  return apiFetch('/dashboard/overview');
+}
+
+export async function getPredictionsApi() {
+  return apiFetch('/dashboard/predictions');
+}
+
+export async function getBuyCandidatesApi() {
+  return apiFetch('/dashboard/buy-candidates');
+}
+
+export async function getRiskAnalysisApi() {
+  return apiFetch('/dashboard/risk');
+}
+
+export async function runBacktestApi(payload) {
+  return apiFetch('/dashboard/backtest', {
+    method: 'POST',
+    body: payload,
+  });
+}
+
+export async function getModelPerformanceApi() {
+  return apiFetch('/dashboard/model-performance');
+}
+
+export async function getPaperTradingApi() {
+  return apiFetch('/dashboard/paper-trading');
+}
+
+export async function executePaperOrderApi(payload) {
+  return apiFetch('/dashboard/paper-trading/order', {
+    method: 'POST',
+    body: payload,
+  });
+}
+
+export async function resetPaperTradingApi() {
+  return apiFetch('/dashboard/paper-trading/reset', {
+    method: 'POST',
+  });
+}
+
+export async function runClaimAuditorApi(payload) {
+  return apiFetch('/dashboard/auditor', {
+    method: 'POST',
+    body: payload,
+  });
+}
+
+export async function getRippleScenariosApi() {
+  return apiFetch('/dashboard/ripple/scenarios');
+}
+
+export async function runRippleSimulationApi(payload) {
+  return apiFetch('/dashboard/ripple', {
+    method: 'POST',
+    body: payload,
+  });
+}
+
+export async function getMyPatternApi() {
+  return apiFetch('/dashboard/my-pattern');
+}
+
+export async function getUserHoldingsApi() {
+  return apiFetch('/dashboard/holdings');
+}

@@ -125,11 +125,10 @@ export default function Register() {
                   if (fieldErrors.name) setFieldErrors({ ...fieldErrors, name: null });
                 }}
                 placeholder="Jane Doe"
-                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${
-                  fieldErrors.name
+                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${fieldErrors.name
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-slate-800 focus:ring-blue-500 focus:border-blue-500'
-                }`}
+                  }`}
                 required
               />
             </div>
@@ -153,11 +152,10 @@ export default function Register() {
                   if (fieldErrors.email) setFieldErrors({ ...fieldErrors, email: null });
                 }}
                 placeholder="researcher@alphawatch.local"
-                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${
-                  fieldErrors.email
+                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${fieldErrors.email
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-slate-800 focus:ring-blue-500 focus:border-blue-500'
-                }`}
+                  }`}
                 autoComplete="email"
                 required
               />
@@ -182,11 +180,10 @@ export default function Register() {
                   if (fieldErrors.password) setFieldErrors({ ...fieldErrors, password: null });
                 }}
                 placeholder="At least 10 characters"
-                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${
-                  fieldErrors.password
+                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${fieldErrors.password
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-slate-800 focus:ring-blue-500 focus:border-blue-500'
-                }`}
+                  }`}
                 autoComplete="new-password"
                 required
               />
@@ -212,11 +209,10 @@ export default function Register() {
                     setFieldErrors({ ...fieldErrors, confirmPassword: null });
                 }}
                 placeholder="Re-enter password"
-                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${
-                  fieldErrors.confirmPassword
+                className={`w-full pl-9 pr-3 py-2 bg-slate-950 border rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 ${fieldErrors.confirmPassword
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-slate-800 focus:ring-blue-500 focus:border-blue-500'
-                }`}
+                  }`}
                 autoComplete="new-password"
                 required
               />

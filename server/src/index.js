@@ -8,6 +8,8 @@ import { fileURLToPath } from 'url';
 
 import { authenticate } from './auth.js';
 import authRouter from './routes/auth.js';
+import onboardingRouter from './routes/onboarding.js';
+import dashboardRouter from './routes/dashboard.js';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
@@ -56,6 +58,12 @@ app.get('/api/health', (req, res) => {
 
 // Authentication Routes
 app.use('/api/auth', authRouter);
+
+// Onboarding Routes
+app.use('/api/onboarding', onboardingRouter);
+
+// Dashboard Routes
+app.use('/api/dashboard', dashboardRouter);
 
 // Centralized Error Handler (OWASP: Never leak stack traces to users)
 app.use((err, req, res, next) => {

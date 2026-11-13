@@ -14,8 +14,9 @@ if (!fs.existsSync(dbDir)) {
 
 export const db = new DatabaseSync(dbPath);
 
-// Enable WAL mode and foreign key constraints
+// Enable WAL mode, busy timeout, and foreign key constraints
 db.exec(`
+  PRAGMA busy_timeout = 10000;
   PRAGMA journal_mode = WAL;
   PRAGMA foreign_keys = ON;
 `);
