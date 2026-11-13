@@ -3,26 +3,63 @@
 @tailwind utilities;
 
 @layer base {
-  body {
+  html, body {
     background-color: #0A0F1D;
     color: #F8FAFC;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Prevent text sizing adjustment on orientation change on mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Smooth anchor scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-/* Custom scrollbars for internal card scrolling */
+@layer components {
+  /* Unified card container style */
+  .fintech-card {
+    background-color: rgba(30, 41, 59, 0.6);
+    border: 1px solid #334155;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .fintech-card-elevated {
+    background-color: rgba(17, 24, 39, 0.8);
+    border: 1px solid #1E293B;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Custom scrollbars for internal card and table scrolling (prevents page-level scroll) */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 #111827;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: #111827;
+  border-radius: 3px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #334155;
   border-radius: 3px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
