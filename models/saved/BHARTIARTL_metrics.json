@@ -1,0 +1,240 @@
+{
+  "symbol": "BHARTIARTL",
+  "model_version": "1.0.0",
+  "model_type": "RandomForestClassifier (Calibrated)",
+  "train_samples": 154,
+  "val_samples": 33,
+  "test_samples": 33,
+  "train_date_range": [
+    "2026-01-09",
+    "2026-08-12"
+  ],
+  "val_date_range": [
+    "2026-08-13",
+    "2026-09-28"
+  ],
+  "test_date_range": [
+    "2026-09-29",
+    "2026-11-12"
+  ],
+  "val_metrics": {
+    "accuracy": 0.6061,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.5538,
+    "brier_score": 0.2357,
+    "confusion_matrix": [
+      [
+        20,
+        0
+      ],
+      [
+        13,
+        0
+      ]
+    ],
+    "majority_baseline_accuracy": 0.6061
+  },
+  "test_metrics": {
+    "accuracy": 0.6667,
+    "precision": 0.75,
+    "recall": 0.2308,
+    "f1": 0.3529,
+    "roc_auc": 0.65,
+    "brier_score": 0.2244,
+    "confusion_matrix": [
+      [
+        19,
+        1
+      ],
+      [
+        10,
+        3
+      ]
+    ],
+    "majority_baseline_accuracy": 0.6061
+  },
+  "walk_forward_cv": [
+    {
+      "fold": 1,
+      "train_samples": 36,
+      "val_samples": 36,
+      "accuracy": 0.4722,
+      "roc_auc": 0.5584,
+      "brier_score": 0.2745,
+      "train_size": 36,
+      "val_size": 36,
+      "precision": 0.4722
+    },
+    {
+      "fold": 2,
+      "train_samples": 72,
+      "val_samples": 36,
+      "accuracy": 0.6389,
+      "roc_auc": 0.6031,
+      "brier_score": 0.2357,
+      "train_size": 72,
+      "val_size": 36,
+      "precision": 0.6389
+    },
+    {
+      "fold": 3,
+      "train_samples": 108,
+      "val_samples": 36,
+      "accuracy": 0.4167,
+      "roc_auc": 0.5422,
+      "brier_score": 0.276,
+      "train_size": 108,
+      "val_size": 36,
+      "precision": 0.4167
+    },
+    {
+      "fold": 4,
+      "train_samples": 144,
+      "val_samples": 36,
+      "accuracy": 0.4444,
+      "roc_auc": 0.4753,
+      "brier_score": 0.2663,
+      "train_size": 144,
+      "val_size": 36,
+      "precision": 0.4444
+    },
+    {
+      "fold": 5,
+      "train_samples": 180,
+      "val_samples": 36,
+      "accuracy": 0.2778,
+      "roc_auc": 0.2762,
+      "brier_score": 0.2993,
+      "train_size": 180,
+      "val_size": 36,
+      "precision": 0.2778
+    }
+  ],
+  "calibration_curve": {
+    "prob_true": [
+      0.0,
+      0.3333,
+      0.5
+    ],
+    "prob_pred": [
+      0.2641,
+      0.3645,
+      0.444
+    ]
+  },
+  "top_features": [
+    {
+      "feature": "vix_level",
+      "importance": 0.0211,
+      "shap_value": 0.0211
+    },
+    {
+      "feature": "nifty_ret_5d",
+      "importance": 0.0133,
+      "shap_value": 0.0133
+    },
+    {
+      "feature": "vix_change_5d",
+      "importance": 0.0125,
+      "shap_value": 0.0125
+    },
+    {
+      "feature": "ret_20d",
+      "importance": 0.0117,
+      "shap_value": 0.0117
+    },
+    {
+      "feature": "volume_ratio_20",
+      "importance": 0.0103,
+      "shap_value": -0.0103
+    }
+  ],
+  "all_feature_importances": [
+    {
+      "feature": "vix_change_5d",
+      "importance": 0.0821
+    },
+    {
+      "feature": "sma_dist_5",
+      "importance": 0.0666
+    },
+    {
+      "feature": "dist_52w_high",
+      "importance": 0.0623
+    },
+    {
+      "feature": "ema_dist_5",
+      "importance": 0.0605
+    },
+    {
+      "feature": "nifty_ret_5d",
+      "importance": 0.0604
+    },
+    {
+      "feature": "ret_20d",
+      "importance": 0.0599
+    },
+    {
+      "feature": "ret_1d",
+      "importance": 0.0593
+    },
+    {
+      "feature": "vix_level",
+      "importance": 0.0542
+    },
+    {
+      "feature": "ema_dist_20",
+      "importance": 0.052
+    },
+    {
+      "feature": "sma_dist_20",
+      "importance": 0.0498
+    },
+    {
+      "feature": "delivery_ratio_20",
+      "importance": 0.0487
+    },
+    {
+      "feature": "rsi_14",
+      "importance": 0.0465
+    },
+    {
+      "feature": "ret_5d",
+      "importance": 0.0462
+    },
+    {
+      "feature": "hl_range",
+      "importance": 0.0431
+    },
+    {
+      "feature": "volatility_20d",
+      "importance": 0.0405
+    },
+    {
+      "feature": "ema_dist_50",
+      "importance": 0.0403
+    },
+    {
+      "feature": "sma_dist_50",
+      "importance": 0.037
+    },
+    {
+      "feature": "delivery_pct",
+      "importance": 0.0352
+    },
+    {
+      "feature": "volume_ratio_20",
+      "importance": 0.0311
+    },
+    {
+      "feature": "nifty_ret_1d",
+      "importance": 0.0242
+    }
+  ],
+  "training_time_sec": 0.2551,
+  "inference_time_per_sample_sec": 0.008149,
+  "as_of_date": "2026-11-12",
+  "saved_at": "2026-11-14 03:20:40"
+}

@@ -1,0 +1,238 @@
+{
+  "symbol": "INFY",
+  "model_version": "1.0.0",
+  "model_type": "RandomForestClassifier (Calibrated)",
+  "train_samples": 154,
+  "val_samples": 33,
+  "test_samples": 33,
+  "train_date_range": [
+    "2026-01-09",
+    "2026-08-12"
+  ],
+  "val_date_range": [
+    "2026-08-13",
+    "2026-09-28"
+  ],
+  "test_date_range": [
+    "2026-09-29",
+    "2026-11-12"
+  ],
+  "val_metrics": {
+    "accuracy": 0.5758,
+    "precision": 0.5758,
+    "recall": 1.0,
+    "f1": 0.7308,
+    "roc_auc": 0.5113,
+    "brier_score": 0.2437,
+    "confusion_matrix": [
+      [
+        0,
+        14
+      ],
+      [
+        0,
+        19
+      ]
+    ],
+    "majority_baseline_accuracy": 0.5758
+  },
+  "test_metrics": {
+    "accuracy": 0.5152,
+    "precision": 0.5152,
+    "recall": 1.0,
+    "f1": 0.68,
+    "roc_auc": 0.6103,
+    "brier_score": 0.2542,
+    "confusion_matrix": [
+      [
+        0,
+        16
+      ],
+      [
+        0,
+        17
+      ]
+    ],
+    "majority_baseline_accuracy": 0.5152
+  },
+  "walk_forward_cv": [
+    {
+      "fold": 1,
+      "train_samples": 36,
+      "val_samples": 36,
+      "accuracy": 0.5,
+      "roc_auc": 0.4582,
+      "brier_score": 0.3207,
+      "train_size": 36,
+      "val_size": 36,
+      "precision": 0.5
+    },
+    {
+      "fold": 2,
+      "train_samples": 72,
+      "val_samples": 36,
+      "accuracy": 0.4167,
+      "roc_auc": 0.55,
+      "brier_score": 0.2856,
+      "train_size": 72,
+      "val_size": 36,
+      "precision": 0.4167
+    },
+    {
+      "fold": 3,
+      "train_samples": 108,
+      "val_samples": 36,
+      "accuracy": 0.5833,
+      "roc_auc": 0.6,
+      "brier_score": 0.2465,
+      "train_size": 108,
+      "val_size": 36,
+      "precision": 0.5833
+    },
+    {
+      "fold": 4,
+      "train_samples": 144,
+      "val_samples": 36,
+      "accuracy": 0.3611,
+      "roc_auc": 0.3302,
+      "brier_score": 0.3239,
+      "train_size": 144,
+      "val_size": 36,
+      "precision": 0.3611
+    },
+    {
+      "fold": 5,
+      "train_samples": 180,
+      "val_samples": 36,
+      "accuracy": 0.3889,
+      "roc_auc": 0.7111,
+      "brier_score": 0.2596,
+      "train_size": 180,
+      "val_size": 36,
+      "precision": 0.3889
+    }
+  ],
+  "calibration_curve": {
+    "prob_true": [
+      0.5862,
+      0.5
+    ],
+    "prob_pred": [
+      0.5701,
+      0.6092
+    ]
+  },
+  "top_features": [
+    {
+      "feature": "vix_change_5d",
+      "importance": 0.0302,
+      "shap_value": 0.0302
+    },
+    {
+      "feature": "ema_dist_50",
+      "importance": 0.0232,
+      "shap_value": -0.0232
+    },
+    {
+      "feature": "hl_range",
+      "importance": 0.0209,
+      "shap_value": -0.0209
+    },
+    {
+      "feature": "ret_5d",
+      "importance": 0.0167,
+      "shap_value": -0.0167
+    },
+    {
+      "feature": "ema_dist_20",
+      "importance": 0.0142,
+      "shap_value": -0.0142
+    }
+  ],
+  "all_feature_importances": [
+    {
+      "feature": "nifty_ret_5d",
+      "importance": 0.0851
+    },
+    {
+      "feature": "sma_dist_50",
+      "importance": 0.0689
+    },
+    {
+      "feature": "hl_range",
+      "importance": 0.0678
+    },
+    {
+      "feature": "nifty_ret_1d",
+      "importance": 0.0619
+    },
+    {
+      "feature": "ema_dist_50",
+      "importance": 0.0589
+    },
+    {
+      "feature": "vix_change_5d",
+      "importance": 0.0568
+    },
+    {
+      "feature": "ret_5d",
+      "importance": 0.0508
+    },
+    {
+      "feature": "dist_52w_high",
+      "importance": 0.0503
+    },
+    {
+      "feature": "volume_ratio_20",
+      "importance": 0.049
+    },
+    {
+      "feature": "ema_dist_5",
+      "importance": 0.0487
+    },
+    {
+      "feature": "ret_1d",
+      "importance": 0.0475
+    },
+    {
+      "feature": "rsi_14",
+      "importance": 0.0449
+    },
+    {
+      "feature": "delivery_ratio_20",
+      "importance": 0.0445
+    },
+    {
+      "feature": "sma_dist_5",
+      "importance": 0.0433
+    },
+    {
+      "feature": "sma_dist_20",
+      "importance": 0.0411
+    },
+    {
+      "feature": "vix_level",
+      "importance": 0.0407
+    },
+    {
+      "feature": "ema_dist_20",
+      "importance": 0.0377
+    },
+    {
+      "feature": "delivery_pct",
+      "importance": 0.0348
+    },
+    {
+      "feature": "ret_20d",
+      "importance": 0.0339
+    },
+    {
+      "feature": "volatility_20d",
+      "importance": 0.0333
+    }
+  ],
+  "training_time_sec": 0.2732,
+  "inference_time_per_sample_sec": 0.009636,
+  "as_of_date": "2026-11-12",
+  "saved_at": "2026-11-14 03:20:38"
+}

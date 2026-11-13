@@ -40,5 +40,55 @@
     "p95_latency_ms": 30.926,
     "measured_runs": 200
   },
-  "benchmarked_at": "2026-11-13 19:40:29"
+  "benchmarked_at": "2026-11-13 19:40:29",
+  "RELIANCE": {
+    "training_time_sec": 0.2574,
+    "inference_time_per_sample_sec": 0.010599,
+    "recorded_at": "2026-11-14 03:20:35"
+  },
+  "TCS": {
+    "training_time_sec": 0.277,
+    "inference_time_per_sample_sec": 0.009631,
+    "recorded_at": "2026-11-14 03:20:36"
+  },
+  "HDFCBANK": {
+    "training_time_sec": 0.267,
+    "inference_time_per_sample_sec": 0.008675,
+    "recorded_at": "2026-11-14 03:20:37"
+  },
+  "INFY": {
+    "training_time_sec": 0.2732,
+    "inference_time_per_sample_sec": 0.009636,
+    "recorded_at": "2026-11-14 03:20:38"
+  },
+  "ICICIBANK": {
+    "training_time_sec": 0.2488,
+    "inference_time_per_sample_sec": 0.008344,
+    "recorded_at": "2026-11-14 03:20:39"
+  },
+  "SBIN": {
+    "training_time_sec": 0.2897,
+    "inference_time_per_sample_sec": 0.014614,
+    "recorded_at": "2026-11-14 03:20:40"
+  },
+  "BHARTIARTL": {
+    "training_time_sec": 0.2551,
+    "inference_time_per_sample_sec": 0.008149,
+    "recorded_at": "2026-11-14 03:20:40"
+  },
+  "ITC": {
+    "training_time_sec": 0.2611,
+    "inference_time_per_sample_sec": 0.008778,
+    "recorded_at": "2026-11-14 03:20:41"
+  },
+  "LT": {
+    "training_time_sec": 0.248,
+    "inference_time_per_sample_sec": 0.008426,
+    "recorded_at": "2026-11-14 03:20:42"
+  },
+  "HINDUNILVR": {
+    "training_time_sec": 0.2643,
+    "inference_time_per_sample_sec": 0.009485,
+    "recorded_at": "2026-11-14 03:20:43"
+  }
 }

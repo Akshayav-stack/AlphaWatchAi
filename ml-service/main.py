@@ -233,7 +233,7 @@ def calculate_risk(req: PortfolioRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 # ----------------------------------------------------------------------------
-# Algorithmic Predictions & Buy Candidates Endpoints
+# Algorithmic Predictions, Explainable AI & Buy Candidates Endpoints
 # ----------------------------------------------------------------------------
 
 @app.post("/api/ml/predictions")
@@ -242,48 +242,69 @@ def get_predictions(req: PortfolioRequest):
     profile = req.profile or "Moderate"
     thresholds = PROFILES.get(profile, PROFILES["Moderate"])
 
+    from src.explain import explain_trade_decision
+
     predictions = []
     for sym in symbols:
         try:
-            price_df, _ = load_prices(sym)
-            if price_df.empty:
-                continue
-
-            closes = price_df["Close"].tolist()
-            returns = price_df["Close"].pct_change().dropna().tolist()
-
-            # Technical computation
-            vol = volatility_20d(returns) if len(returns) >= 2 else 0.16
-            ret_5d = ((closes[-1] / closes[-6]) - 1.0) if len(closes) >= 6 else 0.012
-            
-            # Simulated walk-forward probability from momentum + vol
-            base_prob = 0.52 + (ret_5d * 1.5) - (vol * 0.1)
-            prob_up = max(0.20, min(0.85, base_prob))
-
-            signal_data = generate_signal(prob=prob_up, profile=profile, model_version="1.0-rf")
-            sig = signal_data["signal"]
-
-            # Compute plain-language reason string from values
-            reason = (
-                f"5-day return of {ret_5d*100.0:+.2f}%, 20d volatility of {vol*100.0:.1f}%, "
-                f"resulting in P(UP)={prob_up*100.0:.1f}% vs {profile} BUY threshold ({thresholds['buy_threshold']:.2f})."
-            )
-
-            risk_tier = "low" if vol < 0.20 else "medium" if vol <= 0.30 else "high"
-
-            predictions.append({
-                "symbol": sym,
-                "prob_up": round(prob_up, 4),
-                "prob_pct": round(prob_up * 100.0, 1),
-                "signal": sig,
-                "profile": profile,
-                "risk_tier": risk_tier,
-                "reason": reason,
-            })
+            exp = explain_trade_decision(sym, investor_profile=profile)
+            if exp.get("status") == "success":
+                predictions.append({
+                    "symbol": sym,
+                    "company_name": exp.get("company_name", sym),
+                    "current_price": exp.get("current_price", 0.0),
+                    "change_1d_pct": exp.get("change_1d_pct", 0.0),
+                    "prob_up": exp["probability_up"],
+                    "prob_pct": exp["probability_up_pct"],
+                    "signal": exp["signal"],
+                    "profile": profile,
+                    "risk_tier": "low" if exp["probability_meter"]["tier"] == "Lower" else ("high" if exp["probability_meter"]["tier"] == "Higher" else "medium"),
+                    "reason": exp["dynamic_explanation"],
+                    "top_features": exp.get("top_features", []),
+                })
+            else:
+                price_df, _ = load_prices(sym)
+                if price_df.empty:
+                    continue
+                closes = price_df["Close"].tolist()
+                returns = price_df["Close"].pct_change().dropna().tolist()
+                vol = volatility_20d(returns) if len(returns) >= 2 else 0.16
+                ret_5d = ((closes[-1] / closes[-6]) - 1.0) if len(closes) >= 6 else 0.012
+                base_prob = 0.52 + (ret_5d * 1.5) - (vol * 0.1)
+                prob_up = max(0.20, min(0.85, base_prob))
+                sig = generate_signal(prob=prob_up, profile=profile, model_version="1.0-rf")["signal"]
+                reason = f"5-day return of {ret_5d*100.0:+.2f}%, 20d volatility of {vol*100.0:.1f}%, resulting in P(UP)={prob_up*100.0:.1f}%."
+                predictions.append({
+                    "symbol": sym,
+                    "prob_up": round(prob_up, 4),
+                    "prob_pct": round(prob_up * 100.0, 1),
+                    "signal": sig,
+                    "profile": profile,
+                    "risk_tier": "medium",
+                    "reason": reason,
+                })
         except Exception:
             continue
 
     return {"predictions": predictions}
+
+
+@app.post("/api/ml/explain-decision")
+def get_explain_decision(body: Dict[str, Any] = Body(...)):
+    """Computes Explainable AI decision dossier with local TreeExplainer SHAP values."""
+    from src.explain import explain_trade_decision
+    symbol = body.get("symbol", "RELIANCE")
+    profile = body.get("profile", "Moderate")
+
+    try:
+        result = explain_trade_decision(symbol=symbol, investor_profile=profile)
+        if result.get("status") == "error":
+            raise HTTPException(status_code=400, detail=result.get("message", "Explanation error"))
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/api/ml/buy-candidates")
 def get_buy_candidates(body: Dict[str, Any] = Body(...)):

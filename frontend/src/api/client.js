@@ -201,6 +201,10 @@ export async function getPredictionsApi() {
   return apiFetch('/dashboard/predictions');
 }
 
+export async function getExplainDecisionApi(symbol) {
+  return apiFetch(`/dashboard/explain/${encodeURIComponent(symbol)}`);
+}
+
 export async function getBuyCandidatesApi() {
   return apiFetch('/dashboard/buy-candidates');
 }

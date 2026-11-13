@@ -146,6 +146,7 @@ def expanding_walk_forward_cv(
         probs = model.predict_proba(X_va_sc)[:, 1]
 
         acc = float(accuracy_score(y_va, preds))
+        prec = float(precision_score(y_va, preds, zero_division=0))
         brier = float(brier_score_loss(y_va, probs))
         try:
             auc = float(roc_auc_score(y_va, probs))
@@ -155,8 +156,11 @@ def expanding_walk_forward_cv(
         fold_scores.append({
             "fold": fold,
             "train_samples": train_idx,
+            "train_size": train_idx,
             "val_samples": len(y_va),
+            "val_size": len(y_va),
             "accuracy": round(acc, 4),
+            "precision": round(prec, 4),
             "roc_auc": round(auc, 4),
             "brier_score": round(brier, 4),
         })
