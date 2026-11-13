@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}404 — Page Not Found | AlphaWatch AI{% endblock %}
+{% block meta_description %}The requested research page or asset does not exist.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="error-page-card">
+        <div class="error-status-badge">404 ERROR</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-desc">
+            The resource, route, or analysis view you requested could not be located in the AlphaWatch AI directory.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">Return to Home</a>
+            {% if current_user %}
+                <a href="/dashboard" class="btn btn-outline">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

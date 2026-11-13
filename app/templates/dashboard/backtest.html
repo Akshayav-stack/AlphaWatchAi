@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Backtest & Portfolio Optimization — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Zero-lookahead backtesting with Indian equity friction and Modern Portfolio Theory optimization.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">QUANTITATIVE SIMULATION</span>
+            <h1 class="page-title mt-1">Backtest & Portfolio Optimization</h1>
+            <p class="text-muted">
+                Executes long-only strategies strictly at next-day Open with realistic Indian friction: 
+                0.10% STT, 0.03% brokerage, SEBI/exchange charges, and 0.05% slippage.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-buy">Zero Lookahead Execution</span>
+        </div>
+    </div>
+
+    <!-- Tab Container -->
+    <div class="tab-container mb-4">
+        <div class="tab-nav mb-3">
+            <button type="button" class="tab-btn active" data-target="tab-backtest">Strategy Backtest</button>
+            <button type="button" class="tab-btn" data-target="tab-optimization">Portfolio Optimization (MPT)</button>
+        </div>
+
+        <!-- Tab 1: Backtest -->
+        <div class="tab-pane active" id="tab-backtest">
+            <!-- Symbol Selector Form -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="GET" action="/dashboard/backtest" class="form-inline-flex">
+                        <label for="symbol" class="form-label mr-2">Select Asset to Backtest:</label>
+                        <select id="symbol" name="symbol" class="form-control" style="width: 220px;" onchange="this.form.submit()">
+                            {% for sym in supported_symbols %}
+                            <option value="{{ sym }}" {% if sym == selected_symbol %}selected{% endif %}>{{ sym }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="text-muted text-xs ml-3">Testing long-only trend model vs Buy & Hold</span>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Backtest Summary Cards -->
+            <div class="metrics-grid mb-4">
+                <div class="metric-card">
+                    <div class="metric-label">Total Strategy Return</div>
+                    <div class="metric-value {% if backtest_result.total_return_pct >= 0 %}text-green{% else %}text-red{% endif %}">
+                        {% if backtest_result.total_return_pct >= 0 %}+{% endif %}{{ backtest_result.total_return_pct }}%
+                    </div>
+                    <div class="metric-sub">
+                        Benchmark: <strong>{{ backtest_result.benchmark_return_pct }}%</strong>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-label">Annualized Return (CAGR)</div>
+                    <div class="metric-value text-accent">{{ backtest_result.cagr_pct }}%</div>
+                    <div class="metric-sub">
+                        Sharpe: <strong>{{ backtest_result.sharpe_ratio }}</strong> | Sortino: <strong>{{ backtest_result.sortino_ratio }}</strong>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-label">Maximum Drawdown</div>
+                    <div class="metric-value text-red">{{ backtest_result.max_drawdown_pct }}%</div>
+                    <div class="metric-sub">
+                        Annual Volatility: <strong>{{ backtest_result.annualized_volatility_pct }}%</strong>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-label">Win Rate & Trades</div>
+                    <div class="metric-value text-green">{{ backtest_result.win_rate_pct }}%</div>
+                    <div class="metric-sub">
+                        {{ backtest_result.winning_trades }}W / {{ backtest_result.losing_trades }}L | PF: <strong>{{ backtest_result.profit_factor }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equity Curve Plotly Chart -->
+            <div class="card mb-4">
+                <div class="card-header dashboard-header-flex">
+                    <h3 class="card-title">Simulated Cumulative Equity Growth vs Benchmark</h3>
+                    <span class="badge badge-source">Start: {{ backtest_result.start_date }} | End: {{ backtest_result.end_date }}</span>
+                </div>
+                <div class="card-body">
+                    <div id="equity-curve-chart" class="chart-container" style="min-height: 400px;"></div>
+                </div>
+            </div>
+
+            <!-- Executed Trade Log -->
+            <div class="card mb-4">
+                <div class="card-header dashboard-header-flex">
+                    <h3 class="card-title">Completed Trade Log (Friction Deducted)</h3>
+                    <span class="badge badge-tag">{{ backtest_result.trades|length }} Trades</span>
+                </div>
+                <div class="card-body">
+                    {% if backtest_result.trades and backtest_result.trades|length > 0 %}
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Entry Date</th>
+                                    <th>Entry Price</th>
+                                    <th>Exit Date</th>
+                                    <th>Exit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Net P&L (₹)</th>
+                                    <th>Return %</th>
+                                    <th>Holding Days</th>
+                                    <th>Exit Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for t in backtest_result.trades %}
+                                <tr>
+                                    <td>{{ t.entry_date }}</td>
+                                    <td>₹{{ "{:,.2f}".format(t.entry_price) }}</td>
+                                    <td>{{ t.exit_date }}</td>
+                                    <td>₹{{ "{:,.2f}".format(t.exit_price) }}</td>
+                                    <td>{{ t.quantity }}</td>
+                                    <td class="{% if t.net_pnl >= 0 %}text-green{% else %}text-red{% endif %}">
+                                        {% if t.net_pnl >= 0 %}+{% endif %}₹{{ "{:,.2f}".format(t.net_pnl) }}
+                                    </td>
+                                    <td>
+                                        <span class="badge {% if t.return_pct >= 0 %}badge-buy{% else %}badge-sell{% endif %}">
+                                            {% if t.return_pct >= 0 %}+{% endif %}{{ t.return_pct }}%
+                                        </span>
+                                    </td>
+                                    <td>{{ t.holding_days }}</td>
+                                    <td><span class="text-xs text-muted">{{ t.exit_reason }}</span></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No closed trades during this backtest interval.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Optimization (MPT) -->
+        <div class="tab-pane" id="tab-optimization">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Modern Portfolio Theory Allocation Comparison</h3>
+                    <span class="badge badge-tag">30% Concentration Bound Enforced</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-container mb-4">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Allocation Model</th>
+                                    <th>Expected Annual Return</th>
+                                    <th>Expected Volatility</th>
+                                    <th>Sharpe Ratio (Rf=6.5%)</th>
+                                    <th>Primary Objective</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if opt_result.current_portfolio %}
+                                <tr>
+                                    <td><strong>Current User Portfolio</strong></td>
+                                    <td>{{ opt_result.current_portfolio.expected_return_pct }}%</td>
+                                    <td>{{ opt_result.current_portfolio.expected_volatility_pct }}%</td>
+                                    <td>{{ opt_result.current_portfolio.sharpe_ratio }}</td>
+                                    <td><span class="text-muted">Existing Holdings Baseline</span></td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <td><strong>Maximum Sharpe Ratio</strong></td>
+                                    <td class="text-green">{{ opt_result.max_sharpe.expected_return_pct }}%</td>
+                                    <td>{{ opt_result.max_sharpe.expected_volatility_pct }}%</td>
+                                    <td><strong class="text-green">{{ opt_result.max_sharpe.sharpe_ratio }}</strong></td>
+                                    <td>Maximizes excess return per unit of volatility</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Minimum Variance Portfolio</strong></td>
+                                    <td>{{ opt_result.min_variance.expected_return_pct }}%</td>
+                                    <td class="text-green">{{ opt_result.min_variance.expected_volatility_pct }}%</td>
+                                    <td>{{ opt_result.min_variance.sharpe_ratio }}</td>
+                                    <td>Minimizes portfolio risk (variance)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Risk Parity (Inverse Volatility)</strong></td>
+                                    <td>{{ opt_result.risk_parity.expected_return_pct }}%</td>
+                                    <td>{{ opt_result.risk_parity.expected_volatility_pct }}%</td>
+                                    <td>{{ opt_result.risk_parity.sharpe_ratio }}</td>
+                                    <td>Equalizes risk contribution across holdings</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Equal Weight (1/N)</strong></td>
+                                    <td>{{ opt_result.equal_weight.expected_return_pct }}%</td>
+                                    <td>{{ opt_result.equal_weight.expected_volatility_pct }}%</td>
+                                    <td>{{ opt_result.equal_weight.sharpe_ratio }}</td>
+                                    <td>Unbiased naive allocation benchmark</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Efficient Frontier Plotly Chart -->
+                    <div id="efficient-frontier-chart" class="chart-container" style="min-height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Render Backtest Equity Curve
+    const dates = {{ backtest_result.equity_curve | map(attribute='date') | list | tojson }};
+    const strategyEq = {{ backtest_result.equity_curve | map(attribute='equity') | list | tojson }};
+    const benchEq = {{ backtest_result.equity_curve | map(attribute='benchmark_equity') | list | tojson }};
+
+    if (dates && dates.length > 0) {
+        renderEquityCurveChart('equity-curve-chart', dates, strategyEq, benchEq);
+    }
+
+    // 2. Render Efficient Frontier
+    const frontierPoints = {{ opt_result.efficient_frontier | tojson }};
+    const curPort = {{ opt_result.current_portfolio | tojson if opt_result.current_portfolio else 'null' }};
+    const maxSharpe = {{ opt_result.max_sharpe | tojson }};
+    const minVar = {{ opt_result.min_variance | tojson }};
+
+    if (frontierPoints && frontierPoints.length > 0) {
+        renderEfficientFrontierChart('efficient-frontier-chart', frontierPoints, curPort, maxSharpe, minVar);
+    }
+});
+</script>
+{% endblock %}

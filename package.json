@@ -1,0 +1,19 @@
+{
+  "name": "alphawatch-ai",
+  "version": "1.0.0",
+  "description": "AlphaWatch AI — ASTRAQUANT X 2026: 3-tier Algorithmic Trading Research Platform",
+  "private": true,
+  "scripts": {
+    "dev:all": "concurrently -k -p \"[{name}]\" -n \"ML,SERVER,CLIENT\" -c \"magenta,blue,green\" \"npm run dev:ml\" \"npm run dev:server\" \"npm run dev:frontend\"",
+    "dev:ml": "powershell -Command \".\\venv\\Scripts\\uvicorn.exe ml-service.main:app --host 127.0.0.1 --port 8001 --reload\"",
+    "dev:server": "npm --prefix server run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "test": "npm run test:python && npm run test:node",
+    "test:python": "powershell -Command \".\\venv\\Scripts\\pytest.exe -v\"",
+    "test:node": "npm --prefix server test",
+    "build:frontend": "npm --prefix frontend run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

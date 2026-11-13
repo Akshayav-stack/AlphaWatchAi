@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}My Pattern — Investor Risk Profile | AlphaWatch AI{% endblock %}
+{% block meta_description %}Review your quantitative risk score, behavioral diagnostics, and transparent 'Why this profile' rule derivation.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">OBJECTIVE PSYCHOMETRIC ENGINE</span>
+            <h1 class="page-title mt-1">My Investor Pattern</h1>
+            <p class="text-muted">
+                Transparent derivation of your investor profile, risk tolerance score, and diversification metrics.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <a href="/onboarding" class="btn btn-outline-sm">✏️ Retake Profiler Questionnaire</a>
+        </div>
+    </div>
+
+    <!-- Core Investor Pattern Cards -->
+    <div class="metrics-grid mb-4">
+        <div class="metric-card">
+            <div class="metric-label">Suggested Investor Profile</div>
+            <div class="metric-value text-accent">{{ user_profile.suggested_profile }}</div>
+            <div class="metric-sub">
+                Risk Score: <strong>{{ user_profile.risk_score }} / 100</strong>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Diversification Score</div>
+            <div class="metric-value {% if user_profile.diversification_score >= 60.0 %}text-green{% else %}text-red{% endif %}">
+                {{ user_profile.diversification_score }} / 100
+            </div>
+            <div class="metric-sub">
+                Concentration Status: <strong>{{ user_profile.concentration_status }}</strong>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Recommended Holding Style</div>
+            <div class="metric-value text-accent">{{ user_profile.holding_style }}</div>
+            <div class="metric-sub">Investment Horizon: {{ user_profile.horizon }}</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Preferred Sector Universe</div>
+            <div class="metric-value text-sm mt-2 text-accent">{{ user_profile.preferred_sectors }}</div>
+            <div class="metric-sub">Primary Goal: {{ user_profile.goal }}</div>
+        </div>
+    </div>
+
+    <!-- Visible "Why This Profile" Rule Derivation Panel (Mandatory Requirement) -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <h2 class="card-title">Transparent Derivation: Why This Profile?</h2>
+            <span class="badge badge-buy">Documented Rule Chain</span>
+        </div>
+        <div class="card-body">
+            <div class="rule-callout mb-3">
+                <p class="mb-0 text-base font-weight-bold">{{ user_profile.why_this_profile }}</p>
+            </div>
+            <p class="text-sm text-muted">
+                AlphaWatch AI strictly rejects arbitrary black-box risk scores. Your assigned profile ({{ user_profile.suggested_profile }}) 
+                governs prediction trigger thresholds in <code>src/models.py</code> (e.g. Conservative requires 60% probability for BUY; 
+                Aggressive accepts 52% probability).
+            </p>
+        </div>
+    </div>
+
+    <!-- Questionnaire Responses Audit Table -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Submitted Behavioral Responses</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Questionnaire Dimension</th>
+                            <th>Your Stated Response</th>
+                            <th>Deterministic Scoring Rule</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Primary Goal</strong></td>
+                            <td>{{ user_profile.goal }}</td>
+                            <td><span class="text-muted">Preservation (-15), Wealth Creation (+5), Aggressive Growth (+15)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Investment Horizon</strong></td>
+                            <td>{{ user_profile.horizon }}</td>
+                            <td><span class="text-muted">&lt;1 Year (-10), 1-3 Years (0), 3-5 Years (+5), 5+ Years (+10)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Market Experience</strong></td>
+                            <td>{{ user_profile.experience }}</td>
+                            <td><span class="text-muted">Beginner (-10), Intermediate (0), Advanced (+10)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trading Frequency</strong></td>
+                            <td>{{ user_profile.trading_frequency }}</td>
+                            <td><span class="text-muted">Determines dynamic rebalancing and review cycle</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>10% Market Decline Reaction</strong></td>
+                            <td>{{ user_profile.fall_reaction }}</td>
+                            <td><span class="text-muted">Panic Sell (-20), Trim (-10), Hold (+5), Buy Dip (+15)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Share of Savings Invested</strong></td>
+                            <td>{{ user_profile.savings_share }}</td>
+                            <td><span class="text-muted">&lt;10% (+10), 10-25% (0), 25-50% (-5), &gt;50% (-15)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

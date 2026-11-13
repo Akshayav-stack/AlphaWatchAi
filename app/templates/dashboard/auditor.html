@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Claim Auditor — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Empirical audit verifying algorithmic signals against actual subsequent market outcomes with zero promotional inflation.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">HONEST BENCHMARKING</span>
+            <h1 class="page-title mt-1">Claim Auditor & Signal Verification</h1>
+            <p class="text-muted">
+                Mathematical audit of algorithmic model claims against actual realized market outcomes across historical price data.
+                Zero promotional puffery, zero invented metrics.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-buy">Audit Rating: {{ audit_summary.calibration_rating }}</span>
+        </div>
+    </div>
+
+    <!-- Audit Summary Cards -->
+    <div class="metrics-grid mb-4">
+        <div class="metric-card">
+            <div class="metric-label">BUY Signal Realized Precision</div>
+            <div class="metric-value {% if audit_summary.buy_win_rate_pct >= 50.0 %}text-green{% else %}text-red{% endif %}">
+                {{ audit_summary.buy_win_rate_pct }}%
+            </div>
+            <div class="metric-sub">
+                {{ audit_summary.buy_signals_count }} Total BUY signals audited
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">High-Confidence Hit Rate (&gt;65% Prob)</div>
+            <div class="metric-value text-accent">{{ audit_summary.high_confidence_win_rate_pct }}%</div>
+            <div class="metric-sub">
+                Conviction trade realized win rate
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Average 5-Day Forward Return</div>
+            <div class="metric-value {% if audit_summary.avg_buy_5d_return_pct >= 0 %}text-green{% else %}text-red{% endif %}">
+                {% if audit_summary.avg_buy_5d_return_pct >= 0 %}+{% endif %}{{ audit_summary.avg_buy_5d_return_pct }}%
+            </div>
+            <div class="metric-sub">
+                SELL/HOLD Return: <strong>{{ audit_summary.avg_sell_hold_5d_return_pct }}%</strong>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Probability Brier Score</div>
+            <div class="metric-value text-accent">{{ audit_summary.brier_score }}</div>
+            <div class="metric-sub">
+                Edge over random baseline: <strong>+{{ audit_summary.alpha_over_random_pct }}%</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audit Table of Individual Predictions -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <div>
+                <h2 class="card-title">Historical Claim-by-Claim Verification Ledger</h2>
+                <span class="text-muted text-xs">Comparing predicted signal against actual subsequent 5-day and 20-day returns</span>
+            </div>
+            <span class="badge badge-source">{{ audit_summary.audit_table|length }} Audited Claims Displayed</span>
+        </div>
+        <div class="card-body">
+            {% if audit_summary.audit_table and audit_summary.audit_table|length > 0 %}
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Signal Date</th>
+                            <th>Symbol</th>
+                            <th>Predicted Signal</th>
+                            <th>Model Confidence</th>
+                            <th>Actual 5-Day Return</th>
+                            <th>Actual 20-Day Return</th>
+                            <th>Empirical Verdict</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in audit_summary.audit_table %}
+                        <tr>
+                            <td>{{ row.date }}</td>
+                            <td><strong>{{ row.symbol }}</strong></td>
+                            <td>
+                                {% if row.signal == 'BUY' %}
+                                    <span class="badge badge-buy">BUY</span>
+                                {% elif row.signal == 'SELL' %}
+                                    <span class="badge badge-sell">SELL</span>
+                                {% else %}
+                                    <span class="badge badge-neutral">HOLD</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ row.model_probability }}%</td>
+                            <td class="{% if row.actual_5d_return_pct >= 0 %}text-green{% else %}text-red{% endif %}">
+                                {% if row.actual_5d_return_pct >= 0 %}+{% endif %}{{ row.actual_5d_return_pct }}%
+                            </td>
+                            <td class="{% if row.actual_20d_return_pct >= 0 %}text-green{% else %}text-red{% endif %}">
+                                {% if row.actual_20d_return_pct >= 0 %}+{% endif %}{{ row.actual_20d_return_pct }}%
+                            </td>
+                            <td>
+                                {% if row.outcome == 'VERIFIED PROFITABLE' %}
+                                    <span class="badge badge-buy">VERIFIED PROFITABLE</span>
+                                {% elif row.outcome == 'FALSE ALARM' %}
+                                    <span class="badge badge-sell">FALSE ALARM</span>
+                                {% elif row.outcome == 'CAPITAL PRESERVED' %}
+                                    <span class="badge badge-buy">CAPITAL PRESERVED</span>
+                                {% else %}
+                                    <span class="badge badge-neutral">MISSED RALLY</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">No audit instances logged. Ingest price data to build historical audit traces.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

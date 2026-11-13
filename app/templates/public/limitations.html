@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Limitations & Educational Disclaimer — AlphaWatch AI{% endblock %}
+{% block meta_description %}Mandatory architectural limitations, security disclosures, and academic research disclaimer for AlphaWatch AI.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="page-header">
+        <span class="badge badge-sell">MANDATORY RESEARCH DISCLOSURES</span>
+        <h1 class="page-title">Limitations & Academic Disclaimer</h1>
+        <p class="page-lead">Full architectural transparency regarding system scope, security boundaries, and operational boundaries.</p>
+    </div>
+
+    <!-- Prominent Alert Banner -->
+    <div class="alert alert-warning mb-4">
+        <div>
+            <h3 class="alert-title">Educational Research Signal Notice</h3>
+            <p>
+                AlphaWatch AI is strictly an academic research demonstration for <strong>ASTRAQUANT X 2026</strong>. 
+                It does <strong>NOT</strong> constitute investment advice, financial planning, portfolio management services, 
+                or SEBI-registered research recommendations. All outputs are educational quantitative experiments.
+            </p>
+        </div>
+    </div>
+
+    <div class="card-grid mb-4">
+        <!-- Limitation 1: No Broker Code -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">1. No Broker Integration / No Real Orders</h3>
+                <span class="badge badge-sell">AIR-GAPPED</span>
+            </div>
+            <div class="card-body">
+                <p>
+                    AlphaWatch AI contains <strong>zero broker API credentials, zero trading gateways, and zero real order routing</strong>. 
+                    No trade placed on this platform reaches Zerodha, Groww, Upstox, Angel One, or any exchange member. All executions 
+                    on the Paper Trading page are mathematical simulations recorded solely within your local SQLite session.
+                </p>
+            </div>
+        </div>
+
+        <!-- Limitation 2: No Email Verification or Password Reset -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">2. No Email Verification & No Password Reset</h3>
+                <span class="badge badge-neutral">OFFLINE ARCHITECTURE</span>
+            </div>
+            <div class="card-body">
+                <p>
+                    Because AlphaWatch AI is designed to run <strong>100% offline without external network dependencies</strong>, 
+                    there is no SMTP email dispatch server configured. Consequently:
+                </p>
+                <ul class="styled-list">
+                    <li>There is <strong>no email verification</strong> during registration.</li>
+                    <li>There is <strong>no automated "Forgot Password" or password reset mechanism</strong>.</li>
+                    <li>Users are responsible for recording their credentials. If forgotten, accounts can be safely re-registered.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Limitation 3: No Admin Area -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">3. No Admin Area / No Backdoors</h3>
+                <span class="badge badge-buy">ZERO PRIVILEGED ROLES</span>
+            </div>
+            <div class="card-body">
+                <p>
+                    There is <strong>no administrative backend, superuser dashboard, or master credential</strong>. 
+                    Every database query enforces strict user-level parameterization (<code>WHERE user_id = :id</code>). 
+                    No user or system operator can view or modify another user's holdings, risk scores, or trading logs.
+                </p>
+            </div>
+        </div>
+
+        <!-- Limitation 4: Corporate Actions & Bhavcopy Prices -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">4. Unadjusted Historical Corporate Actions</h3>
+                <span class="badge badge-warning">DATA CAVEAT</span>
+            </div>
+            <div class="card-body">
+                <p>
+                    Raw NSE Bhavcopy archives reflect official end-of-day traded prices and are <strong>not retroactively adjusted 
+                    for stock splits, rights issues, or bonus shares</strong>. To protect model integrity:
+                </p>
+                <ul class="styled-list">
+                    <li>AlphaWatch AI automatically flags single-day price jumps &gt;20% in <code>data_loader.py</code>.</li>
+                    <li>Users are advised that historical returns around split dates reflect raw nominal prices.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Limitation 5: Screener.in Stale Data -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">5. Screener.in As-Of Staleness Threshold</h3>
+                <span class="badge badge-neutral">120-DAY WINDOW</span>
+            </div>
+            <div class="card-body">
+                <p>
+                    Fundamental ratios (P/E, ROE, ROCE, Debt to Equity, Sales & Profit Growth) depend on published quarterly and annual filings. 
+                    AlphaWatch AI displays the exact export date from Screener.in and surfaces an explicit 
+                    <strong>"Stale Data Warning"</strong> whenever the export date is older than 120 days.
+                </p>
+            </div>
+        </div>
+
+        <!-- Limitation 6: Model Calibration Bounds -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">6. Probabilistic Signals & Regime Shifts</h3>
+                <span class="badge badge-tag">PROBABILISTIC</span>
+            </div>
+            <div class="card-body">
+                <p>
+                    Machine learning predictions represent the estimated empirical probability that <em>Close(t+1) &gt; Close(t)</em>. 
+                    Financial markets are non-stationary with fat-tailed risk distributions. Past algorithmic precision 
+                    does not guarantee future outcomes during unexpected geopolitical or macroeconomic regime shifts.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEBI Regulatory Statement -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">SEBI Regulatory Notice</h3>
+        </div>
+        <div class="card-body">
+            <p>
+                Under the Securities and Exchange Board of India (Investment Advisers) Regulations, 2013 and SEBI (Research Analysts) Regulations, 2014, 
+                this platform does not conduct business as an investment adviser or research entity. It is an algorithmic trading software 
+                competition submission developed for educational and academic purposes only.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

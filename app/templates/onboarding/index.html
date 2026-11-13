@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Investor Profiling & Holdings Onboarding — AlphaWatch AI{% endblock %}
+{% block meta_description %}Configure your portfolio holdings and complete the adaptive risk profiling assessment.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="page-header">
+        <span class="badge badge-tag">STEP 1 OF 1 — ADAPTIVE ONBOARDING</span>
+        <h1 class="page-title">Portfolio Setup & Investor Pattern Profiler</h1>
+        <p class="page-lead">Enter your starting holdings and answer 7 fixed behavioral questions to generate your objective risk profile.</p>
+    </div>
+
+    {% if error_msg %}
+    <div class="alert alert-danger" role="alert">
+        <span class="badge badge-sell">ERROR</span>
+        <span>{{ error_msg }}</span>
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/onboarding" class="form-vertical" id="onboarding-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <!-- Section 1: Portfolio Holdings -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="card-title">1. Your Current NSE Equity Holdings</h2>
+                <span class="badge badge-buy">OFFLINE POSITION TRACKER</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">
+                    Select symbols from the 12 supported NSE equities. Enter the number of shares held and your average buy price.
+                    You can add or modify these anytime from the Dashboard.
+                </p>
+
+                <div class="table-container mb-3">
+                    <table class="data-table" id="holdings-input-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">Stock Symbol</th>
+                                <th style="width: 25%;">Quantity (Shares)</th>
+                                <th style="width: 25%;">Buy Price (₹)</th>
+                                <th style="width: 20%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="holdings-tbody">
+                            {% if current_holdings and current_holdings|length > 0 %}
+                                {% for h in current_holdings %}
+                                <tr class="holding-row">
+                                    <td>
+                                        <select name="symbol[]" class="form-control" required>
+                                            {% for sym in supported_symbols %}
+                                            <option value="{{ sym }}" {% if sym == h.symbol %}selected{% endif %}>{{ sym }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="quantity[]" class="form-control" value="{{ h.quantity }}" min="1" step="1" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="buy_price[]" class="form-control" value="{{ h.buy_price }}" min="0.01" step="0.05" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-sm remove-row-btn">Remove</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Default 2 starter rows -->
+                                <tr class="holding-row">
+                                    <td>
+                                        <select name="symbol[]" class="form-control" required>
+                                            {% for sym in supported_symbols %}
+                                            <option value="{{ sym }}" {% if sym == 'RELIANCE' %}selected{% endif %}>{{ sym }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="quantity[]" class="form-control" value="10" min="1" step="1" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="buy_price[]" class="form-control" value="2500.00" min="0.01" step="0.05" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-sm remove-row-btn">Remove</button>
+                                    </td>
+                                </tr>
+                                <tr class="holding-row">
+                                    <td>
+                                        <select name="symbol[]" class="form-control" required>
+                                            {% for sym in supported_symbols %}
+                                            <option value="{{ sym }}" {% if sym == 'TCS' %}selected{% endif %}>{{ sym }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="quantity[]" class="form-control" value="5" min="1" step="1" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="buy_price[]" class="form-control" value="3800.00" min="0.01" step="0.05" required>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-sm remove-row-btn">Remove</button>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="btn btn-outline-sm" id="add-holding-row-btn">+ Add Another Stock Position</button>
+            </div>
+        </div>
+
+        <!-- Section 2: Fixed Profiler Questions -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="card-title">2. Fixed Investor Questionnaire (7 Behavioral Rules)</h2>
+                <span class="badge badge-tag">TRANSPARENT SCORING</span>
+            </div>
+            <div class="card-body">
+                <div class="form-grid-2">
+                    <!-- Q1 Goal -->
+                    <div class="form-group">
+                        <label class="form-label" for="goal">Primary Investment Goal</label>
+                        <select id="goal" name="goal" class="form-control" required>
+                            <option value="Capital Preservation and Income" {% if profile and 'Preservation' in profile.goal %}selected{% endif %}>Capital Preservation & Steady Income (-15 Risk Score)</option>
+                            <option value="Wealth Creation" {% if not profile or 'Wealth' in profile.goal %}selected{% endif %}>Balanced Long-Term Wealth Creation (+5 Risk Score)</option>
+                            <option value="Aggressive Capital Growth" {% if profile and 'Aggressive' in profile.goal %}selected{% endif %}>Aggressive Capital Appreciation (+15 Risk Score)</option>
+                        </select>
+                    </div>
+
+                    <!-- Q2 Horizon -->
+                    <div class="form-group">
+                        <label class="form-label" for="horizon">Investment Horizon</label>
+                        <select id="horizon" name="horizon" class="form-control" required>
+                            <option value="< 1 Year" {% if profile and '< 1' in profile.horizon %}selected{% endif %}>Short-Term: Less than 1 Year (-10 Risk Score)</option>
+                            <option value="1-3 Years" {% if profile and '1-3' in profile.horizon %}selected{% endif %}>Medium-Term: 1 to 3 Years (0 neutral)</option>
+                            <option value="3-5 Years" {% if not profile or '3-5' in profile.horizon %}selected{% endif %}>Long-Term: 3 to 5 Years (+5 Risk Score)</option>
+                            <option value="> 5 Years" {% if profile and '> 5' in profile.horizon %}selected{% endif %}>Ultra Long-Term: 5+ Years (+10 Risk Score)</option>
+                        </select>
+                    </div>
+
+                    <!-- Q3 Experience -->
+                    <div class="form-group">
+                        <label class="form-label" for="experience">Market Experience</label>
+                        <select id="experience" name="experience" class="form-control" required>
+                            <option value="Beginner (< 1 Year)" {% if profile and 'Beginner' in profile.experience %}selected{% endif %}>Beginner: Less than 1 Year (-10 Risk Score)</option>
+                            <option value="Intermediate (1-3 Years)" {% if not profile or 'Intermediate' in profile.experience %}selected{% endif %}>Intermediate: 1 to 3 Years (0 neutral)</option>
+                            <option value="Advanced (> 3 Years)" {% if profile and 'Advanced' in profile.experience %}selected{% endif %}>Advanced: 3+ Years (+10 Risk Score)</option>
+                        </select>
+                    </div>
+
+                    <!-- Q4 Trading Frequency -->
+                    <div class="form-group">
+                        <label class="form-label" for="trading_frequency">Trading / Review Frequency</label>
+                        <select id="trading_frequency" name="trading_frequency" class="form-control" required>
+                            <option value="Daily" {% if profile and profile.trading_frequency == 'Daily' %}selected{% endif %}>Daily Active Review</option>
+                            <option value="Weekly" {% if profile and profile.trading_frequency == 'Weekly' %}selected{% endif %}>Weekly Swing Monitor</option>
+                            <option value="Monthly" {% if not profile or profile.trading_frequency == 'Monthly' %}selected{% endif %}>Monthly Rebalancing</option>
+                            <option value="Quarterly" {% if profile and profile.trading_frequency == 'Quarterly' %}selected{% endif %}>Quarterly / Buy & Hold</option>
+                        </select>
+                    </div>
+
+                    <!-- Q5 Reaction to 10% Fall -->
+                    <div class="form-group">
+                        <label class="form-label" for="fall_reaction">Reaction to a Sudden 10% Portfolio Decline</label>
+                        <select id="fall_reaction" name="fall_reaction" class="form-control" required>
+                            <option value="Panic and sell all" {% if profile and 'sell all' in profile.fall_reaction %}selected{% endif %}>Panic and liquidate positions immediately (-20 Risk Score)</option>
+                            <option value="Sell partial to reduce risk" {% if profile and 'partial' in profile.fall_reaction %}selected{% endif %}>Trim risk assets and increase cash (-10 Risk Score)</option>
+                            <option value="Hold and observe" {% if not profile or 'Hold' in profile.fall_reaction %}selected{% endif %}>Hold existing positions and observe (+5 Risk Score)</option>
+                            <option value="Buy more at discount" {% if profile and 'Buy more' in profile.fall_reaction %}selected{% endif %}>Deploy capital to buy discounted equities (+15 Risk Score)</option>
+                        </select>
+                    </div>
+
+                    <!-- Q6 Share of Savings -->
+                    <div class="form-group">
+                        <label class="form-label" for="savings_share">Share of Liquid Savings Invested</label>
+                        <select id="savings_share" name="savings_share" class="form-control" required>
+                            <option value="< 10%" {% if profile and '< 10' in profile.savings_share %}selected{% endif %}>Conservative Stake: &lt; 10% (+10 Risk Score capacity)</option>
+                            <option value="10-25%" {% if not profile or '10-25' in profile.savings_share %}selected{% endif %}>Moderate Stake: 10% to 25% (0 neutral)</option>
+                            <option value="25-50%" {% if profile and '25-50' in profile.savings_share %}selected{% endif %}>Significant Stake: 25% to 50% (-5 Risk Score)</option>
+                            <option value="> 50%" {% if profile and '> 50' in profile.savings_share %}selected{% endif %}>Concentrated Stake: &gt; 50% (-15 Risk Score capacity)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q7 Preferred Sectors -->
+                <div class="form-group mt-3">
+                    <label class="form-label" for="preferred_sectors">Preferred Industry Sectors</label>
+                    <input 
+                        type="text" 
+                        id="preferred_sectors" 
+                        name="preferred_sectors" 
+                        class="form-control" 
+                        value="{{ profile.preferred_sectors if profile else 'Technology, Financials, Energy' }}"
+                        placeholder="e.g. Technology, Financials, FMCG, Energy"
+                    >
+                    <small class="form-hint">Used for personalized Buy Candidate filtering and sector correlation checks.</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit & Process -->
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Calculate Investor Pattern & Open Dashboard →</button>
+                <p class="text-muted text-xs mt-2">
+                    Our deterministic rule engine will evaluate single-stock concentration (&gt;30%), sector dominance (&gt;50%), 
+                    and cost-basis drawdown to compute your transparent profile.
+                </p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tableBody = document.getElementById('holdings-tbody');
+    const addBtn = document.getElementById('add-holding-row-btn');
+
+    if (addBtn && tableBody) {
+        addBtn.addEventListener('click', () => {
+            const firstRow = tableBody.querySelector('.holding-row');
+            if (firstRow) {
+                const clone = firstRow.cloneNode(true);
+                clone.querySelectorAll('input').forEach(i => i.value = '');
+                const qtyInput = clone.querySelector('input[name="quantity[]"]');
+                const pxInput = clone.querySelector('input[name="buy_price[]"]');
+                if (qtyInput) qtyInput.value = '10';
+                if (pxInput) pxInput.value = '1000.00';
+                tableBody.appendChild(clone);
+                bindRemoveButtons();
+            }
+        });
+    }
+
+    function bindRemoveButtons() {
+        document.querySelectorAll('.remove-row-btn').forEach(btn => {
+            btn.onclick = function() {
+                const rows = tableBody.querySelectorAll('.holding-row');
+                if (rows.length > 1) {
+                    btn.closest('tr').remove();
+                } else {
+                    alert('You must retain at least one holding position.');
+                }
+            };
+        });
+    }
+    bindRemoveButtons();
+});
+</script>
+{% endblock %}

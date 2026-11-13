@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Simulated Paper Trading — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Virtual paper trading workstation with realistic Indian equity brokerage & STT friction modeling.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">VIRTUAL TRADING WORKSTATION</span>
+            <h1 class="page-title mt-1">Simulated Paper Trading</h1>
+            <p class="text-muted">
+                Execute virtual trades using latest saved NSE close prices. 
+                Realistic friction (0.15% STT + Brokerage + Regulatory fees) is automatically computed and deducted.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-buy">Virtual Capital: ₹10,00,000</span>
+        </div>
+    </div>
+
+    {% if error_msg %}
+    <div class="alert alert-danger mb-4" role="alert">
+        <span class="badge badge-sell">ORDER REJECTED</span>
+        <span>{{ error_msg }}</span>
+    </div>
+    {% endif %}
+
+    {% if success_msg %}
+    <div class="alert alert-success mb-4" role="alert">
+        <span class="badge badge-buy">ORDER EXECUTED</span>
+        <span>{{ success_msg }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Virtual Account Summary Cards -->
+    <div class="metrics-grid mb-4">
+        <div class="metric-card">
+            <div class="metric-label">Total Virtual Portfolio Value</div>
+            <div class="metric-value">₹{{ "{:,.2f}".format(paper_summary.total_portfolio_value) }}</div>
+            <div class="metric-sub">
+                Initial: ₹{{ "{:,.2f}".format(paper_summary.starting_cash) }}
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Available Virtual Cash</div>
+            <div class="metric-value text-accent">₹{{ "{:,.2f}".format(paper_summary.available_cash) }}</div>
+            <div class="metric-sub">
+                Invested Equity: ₹{{ "{:,.2f}".format(paper_summary.invested_equity) }}
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Total Net Return</div>
+            <div class="metric-value {% if paper_summary.total_pnl >= 0 %}text-green{% else %}text-red{% endif %}">
+                {% if paper_summary.total_pnl >= 0 %}+{% endif %}₹{{ "{:,.2f}".format(paper_summary.total_pnl) }}
+            </div>
+            <div class="metric-sub">
+                <span class="badge {% if paper_summary.total_return_pct >= 0 %}badge-buy{% else %}badge-sell{% endif %}">
+                    {% if paper_summary.total_return_pct >= 0 %}+{% endif %}{{ paper_summary.total_return_pct }}%
+                </span>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Realized / Unrealized P&L</div>
+            <div class="metric-value text-accent">
+                ₹{{ "{:,.2f}".format(paper_summary.realized_pnl) }} / ₹{{ "{:,.2f}".format(paper_summary.unrealized_pnl) }}
+            </div>
+            <div class="metric-sub">
+                Total STT & Fees Paid: ₹{{ "{:,.2f}".format(paper_summary.total_fees_paid) }}
+            </div>
+        </div>
+    </div>
+
+    <!-- 2 Column Layout: Order Form & Open Positions -->
+    <div class="dashboard-grid-2 mb-4">
+        <!-- New Paper Order Form -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Place Simulated Order</h2>
+                <span class="badge badge-tag">Instant Offline Match</span>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/dashboard/paper-trading/order" class="form-vertical" autocomplete="off">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                    <div class="form-group">
+                        <label for="order-symbol" class="form-label">Equity Symbol</label>
+                        <select id="order-symbol" name="symbol" class="form-control" required>
+                            {% for sym in supported_symbols %}
+                            <option value="{{ sym }}">{{ sym }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="order-action" class="form-label">Order Action</label>
+                            <select id="order-action" name="action" class="form-control" required>
+                                <option value="BUY">BUY (Long Equity)</option>
+                                <option value="SELL">SELL (Close Position)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="order-quantity" class="form-label">Quantity</label>
+                            <input 
+                                type="number" 
+                                id="order-quantity" 
+                                name="quantity" 
+                                class="form-control" 
+                                placeholder="e.g. 10" 
+                                min="1" 
+                                step="1" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order-notes" class="form-label">Trade Hypothesis / Notes</label>
+                        <input 
+                            type="text" 
+                            id="order-notes" 
+                            name="notes" 
+                            class="form-control" 
+                            placeholder="e.g. Testing model BUY signal with strong ROE"
+                        >
+                    </div>
+
+                    <div class="friction-note p-2 mb-3 text-xs text-muted">
+                        ℹ️ Orders match against the latest saved NSE close price. Delivery STT (0.10%) and brokerage (0.05%) 
+                        are automatically added to cost on BUY and deducted on SELL.
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Execute Simulated Trade</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Open Virtual Positions -->
+        <div class="card">
+            <div class="card-header dashboard-header-flex">
+                <h2 class="card-title">Open Paper Positions</h2>
+                <span class="badge badge-buy">{{ paper_summary.open_positions|length }} Positions</span>
+            </div>
+            <div class="card-body">
+                {% if paper_summary.open_positions and paper_summary.open_positions|length > 0 %}
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Shares</th>
+                                <th>Avg Cost</th>
+                                <th>Mark Price</th>
+                                <th>Value</th>
+                                <th>P&L (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pos in paper_summary.open_positions %}
+                            <tr>
+                                <td><strong>{{ pos.symbol }}</strong></td>
+                                <td>{{ pos.quantity }}</td>
+                                <td>₹{{ "{:,.2f}".format(pos.avg_buy_price) }}</td>
+                                <td>₹{{ "{:,.2f}".format(pos.current_price) }}</td>
+                                <td>₹{{ "{:,.2f}".format(pos.current_value) }}</td>
+                                <td class="{% if pos.unrealized_pnl >= 0 %}text-green{% else %}text-red{% endif %}">
+                                    {% if pos.unrealized_pnl >= 0 %}+{% endif %}₹{{ "{:,.2f}".format(pos.unrealized_pnl) }}
+                                    <small>({{ pos.unrealized_pnl_pct }}%)</small>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state text-center p-4">
+                    <p class="text-muted">No open simulated positions. Place your first simulated trade using the order form.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Complete Transaction Ledger -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <h2 class="card-title">Simulated Transaction Ledger (Audit History)</h2>
+            <span class="badge badge-tag">{{ paper_summary.total_trades_count }} Total Records</span>
+        </div>
+        <div class="card-body">
+            {% if paper_summary.recent_trades and paper_summary.recent_trades|length > 0 %}
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Symbol</th>
+                            <th>Action</th>
+                            <th>Shares</th>
+                            <th>Execution Price</th>
+                            <th>Brokerage + STT</th>
+                            <th>Net Amount</th>
+                            <th>Hypothesis / Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tr in paper_summary.recent_trades %}
+                        <tr>
+                            <td>{{ tr.trade_date }}</td>
+                            <td><strong>{{ tr.symbol }}</strong></td>
+                            <td>
+                                {% if tr.action == 'BUY' %}
+                                    <span class="badge badge-buy">BUY</span>
+                                {% else %}
+                                    <span class="badge badge-sell">SELL</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ tr.quantity }}</td>
+                            <td>₹{{ "{:,.2f}".format(tr.price) }}</td>
+                            <td>₹{{ "{:,.2f}".format(tr.brokerage_stt) }}</td>
+                            <td>₹{{ "{:,.2f}".format(tr.net_amount) }}</td>
+                            <td><span class="text-xs text-muted">{{ tr.notes or '—' }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">No transactions recorded yet in your paper trading journal.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

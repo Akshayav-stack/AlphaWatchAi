@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}500 — Internal Server Error | AlphaWatch AI{% endblock %}
+{% block meta_description %}An unexpected server error occurred while processing market models.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="error-page-card">
+        <div class="error-status-badge badge-sell">500 ERROR</div>
+        <h1 class="error-title">Internal Server Exception</h1>
+        <p class="error-desc">
+            An unexpected error occurred while executing the quantitative models or loading saved datasets. 
+            All state has been safely preserved. Please return to the dashboard or review the server diagnostic logs.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">Return to Home</a>
+            {% if current_user %}
+                <a href="/dashboard" class="btn btn-outline">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

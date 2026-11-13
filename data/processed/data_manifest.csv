@@ -1,0 +1,6 @@
+source,url,report_name,file_name,download_date,rows,date_range,sha256
+NSE India,Local Import,NSE CM-UDiFF Bhavcopy,SAMPLE_bhavcopy_udiff.csv,2026-11-13 15:08:12,3,2026-10-30 to 2026-10-30,1b89227a777198c361f73c2b06426dcb26a2b1524d31a0d62d7c9a2a8eec32ae
+NSE India,Local Import,NSE Security Delivery Data,SAMPLE_delivery_data.csv,2026-11-13 15:08:12,2,2026-10-30 to 2026-10-30,6ccb1f66d3862ad858d95036f6815186201b695a649fc21dbe9187d9ed36d6be
+NSE India,Local Import,India VIX Historical Data,SAMPLE_India_VIX_historical.csv,2026-11-13 15:08:12,3,2026-10-28 to 2026-10-30,2c460a8773dce4fcd75796d788a94876bd75e063604607dae8ea4dd165602cac
+NSE India,Local Import,NIFTY 50 Historical Data,SAMPLE_NIFTY50_historical.csv,2026-11-13 15:08:12,3,2026-10-28 to 2026-10-30,285c0c541746784dd601c95fb5f55bf136033945ba5cf8adb1eb21a6dc72ca1b
+Screener.in,Local Import,Screener.in Financial Workbook,SAMPLE_RELIANCE.xlsx,2026-11-13 15:08:12,1,Multiple Financial Years,846d343f5e196e203639645be350fefcb31f0c0d2d88e8aa3d78d382e3d8929c

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}How It Works — AlphaWatch AI Architecture & Data Sources{% endblock %}
+{% block meta_description %}Technical architecture, quantitative methodology, and offline data sources (NSE & Screener.in) powering AlphaWatch AI.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="page-header">
+        <span class="badge badge-tag">SYSTEM ARCHITECTURE & METHODOLOGY</span>
+        <h1 class="page-title">How AlphaWatch AI Works</h1>
+        <p class="page-lead">A fully offline, mathematically sound pipeline combining machine learning signals with fundamental verification.</p>
+    </div>
+
+    <!-- Data Sources Section -->
+    <div class="card mb-4" id="data-sources">
+        <div class="card-header">
+            <h2 class="card-title">Offline Data Sources & As-Of Reference Dates</h2>
+            <span class="badge badge-source">ZERO RUNTIME NETWORK CALLS</span>
+        </div>
+        <div class="card-body">
+            <p>
+                In strict adherence to ASTRAQUANT X 2026 rules, the running AlphaWatch AI website operates in an air-gapped offline state. 
+                It <strong>never calls the National Stock Exchange of India (NSE) or Screener.in during web runtime</strong>. 
+                All market intelligence is deterministically computed from saved local files:
+            </p>
+
+            <div class="table-container mt-3">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Data Source</th>
+                            <th>Report / Artifact Name</th>
+                            <th>Saved Storage Location</th>
+                            <th>Reference As-Of Date</th>
+                            <th>Integrity Verification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>National Stock Exchange (NSE)</strong></td>
+                            <td>CM-UDiFF Common Bhavcopy Final ZIP & Security Archives</td>
+                            <td><code>data/raw/nse/</code> & <code>data/processed/</code></td>
+                            <td>February 2026 (Saved Offline Archive)</td>
+                            <td><span class="badge badge-buy">SHA-256 Validated</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>National Stock Exchange (NSE)</strong></td>
+                            <td>NIFTY 50 Historical Index & India VIX Series</td>
+                            <td><code>data/processed/NIFTY50.csv</code>, <code>INDIAVIX.csv</code></td>
+                            <td>February 2026 (Daily Close)</td>
+                            <td><span class="badge badge-buy">Checked & Sorted</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Screener.in</strong></td>
+                            <td>Standard Excel Company Financial Workbooks (.xlsx)</td>
+                            <td><code>data/raw/screener/</code></td>
+                            <td>Q3 FY26 / Latest Reported Balance Sheet</td>
+                            <td><span class="badge badge-buy">Formula Sanitized</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>AlphaWatch Ingestion Manifest</strong></td>
+                            <td><code>data_manifest.csv</code> (Cryptographic Ledger)</td>
+                            <td><code>data/processed/data_manifest.csv</code></td>
+                            <td>Continuous Offline Append</td>
+                            <td><span class="badge badge-neutral">Audit Trail</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-callout mt-3">
+                <strong>Data Refresh Note:</strong> Fresh market data is refreshed exclusively via the standalone offline helper <code>scripts/fetch_data.py</code> run manually by the research team. The web application only reads the local sanitized CSV/Excel files.
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 Pipeline Stages -->
+    <div class="card-grid mb-4">
+        <div class="card">
+            <div class="step-num">01</div>
+            <h3 class="card-title">Sanitized Ingestion Layer</h3>
+            <p class="text-muted">
+                Parses NSE CM-UDiFF and legacy Bhavcopy files, isolates Series <code>EQ</code>, checks chronological order, 
+                removes duplicates, and flags price jumps &gt;20% for unadjusted corporate actions. Excel files are opened 
+                with <code>data_only=True</code>, stripping formula prefixes (<code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>) 
+                to eliminate CSV/formula injection threats.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="step-num">02</div>
+            <h3 class="card-title">Leak-Free Feature Engineering</h3>
+            <p class="text-muted">
+                Calculates 20 quantitative features strictly from past data (1/5/20d returns, SMA/EMA distances for 5/20/50, 
+                RSI 14, 20d volatility, volume ratios, delivery trends, NIFTY return context, VIX level, and 52-week high distance). 
+                Zero lookahead bias mathematically proven via unit testing.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="step-num">03</div>
+            <h3 class="card-title">Walk-Forward Model Training</h3>
+            <p class="text-muted">
+                5-fold expanding walk-forward cross validation. Scalers are fitted strictly on training data. Calibrated 
+                Random Forest and Logistic Regression classifiers estimate upward directional probabilities, serialized into 
+                <code>models/saved/</code> alongside audit metrics JSON files.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="step-num">04</div>
+            <h3 class="card-title">6-Pillar Diagnostic & 2x2 Matrix</h3>
+            <p class="text-muted">
+                Rule-based fundamental evaluation (Strong, Mixed, Weak) across Valuation, Profitability, Efficiency, Solvency, 
+                Growth, and Ownership. Combines with ML predictions into transparent educational research summaries (e.g., 
+                <em>"Model says BUY, fundamentals Weak: review before adding"</em>).
+            </p>
+        </div>
+    </div>
+
+    <!-- Execution Engine Details -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Backtesting & Friction Modeling</h2>
+        </div>
+        <div class="card-body">
+            <p>
+                To avoid the rampant trap of backtest overfitting, AlphaWatch AI enforces:
+            </p>
+            <ul class="styled-list">
+                <li><strong>Next-Day Open Execution:</strong> Signals evaluated on Day <em>t</em> Close are executed strictly at Day <em>t+1</em> Open.</li>
+                <li><strong>Realistic Friction:</strong> 0.10% Securities Transaction Tax (STT), 0.03% Brokerage, SEBI turnover fees, Stamp Duty, GST, and 0.05% slippage.</li>
+                <li><strong>Long-Only Constraints:</strong> Cash equity spot modeling without unhedged naked shorting.</li>
+                <li><strong>Audit Accountability:</strong> The Claim Auditor verifies every prediction against actual subsequent 5-day and 20-day returns.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

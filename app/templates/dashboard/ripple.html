@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Ripple Effect (Hypothetical Shock Simulation) — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Stress-testing portfolio holdings against macro and sector shock scenarios (crude oil, RBI rate hikes, tech selloffs).{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-sell">HYPOTHETICAL STRESS TESTING</span>
+            <h1 class="page-title mt-1">Ripple Effect: Macro Shock Simulation</h1>
+            <p class="text-muted">
+                Simulate portfolio resilience under macroeconomic, sector, and systematic market shocks. 
+                Derived from documented economic transmission channels and historical beta covariance.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-source">Educational Research Only</span>
+        </div>
+    </div>
+
+    <!-- Mandatory Educational Disclaimer -->
+    <div class="alert alert-warning mb-4">
+        <div>
+            <strong>HYPOTHETICAL EDUCATIONAL SIMULATION ONLY:</strong> {{ sim_result.disclaimer }}
+        </div>
+    </div>
+
+    <!-- Scenario Selector Card -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="GET" action="/dashboard/ripple" class="form-inline-flex">
+                <label for="scenario" class="form-label mr-2">Select Macro Stress Scenario:</label>
+                <select id="scenario" name="scenario" class="form-control" style="width: 320px;" onchange="this.form.submit()">
+                    <option value="crude_oil_spike" {% if selected_scenario == 'crude_oil_spike' %}selected{% endif %}>Crude Oil Surge (+20% Brent Spike)</option>
+                    <option value="rbi_rate_hike" {% if selected_scenario == 'rbi_rate_hike' %}selected{% endif %}>RBI Rate Hike (+50 bps Repo Hike)</option>
+                    <option value="global_tech_selloff" {% if selected_scenario == 'global_tech_selloff' %}selected{% endif %}>Global Tech Correction (-8% Tech Rout)</option>
+                    <option value="nifty_systemic_correction" {% if selected_scenario == 'nifty_systemic_correction' %}selected{% endif %}>Systemic Drawdown (NIFTY 50 -10%)</option>
+                    <option value="fii_liquidity_rally" {% if selected_scenario == 'fii_liquidity_rally' %}selected{% endif %}>FII Inflow Surge (+5% NIFTY 50)</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scenario Overview & Transmission Mechanism -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <h2 class="card-title">{{ sim_result.scenario_name }}</h2>
+            <span class="badge badge-tag">Economic Mechanism</span>
+        </div>
+        <div class="card-body">
+            <p class="mb-2"><strong>Context:</strong> {{ sim_result.scenario_description }}</p>
+            <div class="rule-callout">
+                <strong>Transmission Channel:</strong> {{ sim_result.economic_mechanism }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Simulation Impact Cards -->
+    <div class="metrics-grid mb-4">
+        <div class="metric-card">
+            <div class="metric-label">Baseline Portfolio Value</div>
+            <div class="metric-value">₹{{ "{:,.2f}".format(sim_result.baseline_portfolio_value) }}</div>
+            <div class="metric-sub">Current mark-to-market</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Simulated Portfolio Value</div>
+            <div class="metric-value">₹{{ "{:,.2f}".format(sim_result.simulated_portfolio_value) }}</div>
+            <div class="metric-sub">Post-shock estimated equity</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Estimated Portfolio Impact</div>
+            <div class="metric-value {% if sim_result.portfolio_impact_amount >= 0 %}text-green{% else %}text-red{% endif %}">
+                {% if sim_result.portfolio_impact_amount >= 0 %}+{% endif %}₹{{ "{:,.2f}".format(sim_result.portfolio_impact_amount) }}
+            </div>
+            <div class="metric-sub">
+                <span class="badge {% if sim_result.portfolio_impact_pct >= 0 %}badge-buy{% else %}badge-sell{% endif %}">
+                    {% if sim_result.portfolio_impact_pct >= 0 %}+{% endif %}{{ sim_result.portfolio_impact_pct }}%
+                </span>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Vulnerability Extreme Ranks</div>
+            <div class="metric-sub mt-2">
+                <div>Most Vulnerable: <strong class="text-red">{{ sim_result.most_vulnerable_symbol }}</strong> ({{ sim_result.most_vulnerable_impact_pct }}%)</div>
+                <div class="mt-1">Most Resilient: <strong class="text-green">{{ sim_result.most_resilient_symbol }}</strong> ({{ sim_result.most_resilient_impact_pct }}%)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asset-by-Asset Shock Simulation Breakdown -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <h2 class="card-title">Holding-by-Holding Stress Sensitivity</h2>
+            <span class="badge badge-source">{{ sim_result.holdings_impact|length }} Positions Shocked</span>
+        </div>
+        <div class="card-body">
+            {% if sim_result.holdings_impact and sim_result.holdings_impact|length > 0 %}
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Sector</th>
+                            <th>Quantity</th>
+                            <th>Current Price</th>
+                            <th>Simulated Shock %</th>
+                            <th>Simulated Price</th>
+                            <th>Baseline Value</th>
+                            <th>Simulated Value</th>
+                            <th>P&L Impact (₹)</th>
+                            <th>Transmission Rule</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for h in sim_result.holdings_impact %}
+                        <tr>
+                            <td><strong>{{ h.symbol }}</strong></td>
+                            <td><span class="text-muted">{{ h.sector }}</span></td>
+                            <td>{{ h.quantity }}</td>
+                            <td>₹{{ "{:,.2f}".format(h.current_price) }}</td>
+                            <td>
+                                <span class="badge {% if h.simulated_shock_pct >= 0 %}badge-buy{% else %}badge-sell{% endif %}">
+                                    {% if h.simulated_shock_pct >= 0 %}+{% endif %}{{ h.simulated_shock_pct }}%
+                                </span>
+                            </td>
+                            <td>₹{{ "{:,.2f}".format(h.simulated_price) }}</td>
+                            <td>₹{{ "{:,.2f}".format(h.current_value) }}</td>
+                            <td>₹{{ "{:,.2f}".format(h.simulated_value) }}</td>
+                            <td class="{% if h.impact_amount >= 0 %}text-green{% else %}text-red{% endif %}">
+                                {% if h.impact_amount >= 0 %}+{% endif %}₹{{ "{:,.2f}".format(h.impact_amount) }}
+                            </td>
+                            <td><span class="text-xs text-muted">{{ h.sensitivity_mechanism }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">No holdings found to simulate. Add holdings in Onboarding to run stress simulations.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

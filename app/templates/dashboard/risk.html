@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Portfolio Risk Subsystem — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Value at Risk (VaR), CVaR / Expected Shortfall, Sharpe, Sortino, Beta, and asset-level risk tiers.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">QUANTITATIVE RISK ENGINE</span>
+            <h1 class="page-title mt-1">Portfolio Risk Subsystem</h1>
+            <p class="text-muted">
+                Source: <strong>{{ risk_report.source_report }}</strong> | As of Date: <strong>{{ risk_report.as_of_date }}</strong>
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-buy">RBI Repo Rate Benchmark: 6.50%</span>
+        </div>
+    </div>
+
+    <!-- Core Risk Metrics Grid -->
+    <div class="metrics-grid mb-4">
+        <!-- 1. 1-Day 95% VaR -->
+        <div class="metric-card">
+            <div class="metric-label">1-Day 95% Value at Risk (VaR)</div>
+            <div class="metric-value text-red">₹{{ "{:,.2f}".format(risk_report.var_95_1d_inr) }}</div>
+            <div class="metric-sub">
+                <span class="badge badge-sell">{{ risk_report.var_95_1d_pct }}% of Portfolio</span>
+            </div>
+            <p class="text-xs text-muted mt-2">
+                On 95 out of 100 trading days, 1-day decline is mathematically expected to not exceed this amount.
+            </p>
+        </div>
+
+        <!-- 2. 1-Day 95% CVaR / Expected Shortfall -->
+        <div class="metric-card">
+            <div class="metric-label">95% Conditional VaR (Expected Shortfall)</div>
+            <div class="metric-value text-red">₹{{ "{:,.2f}".format(risk_report.cvar_95_1d_inr) }}</div>
+            <div class="metric-sub">
+                <span class="badge badge-sell">{{ risk_report.cvar_95_1d_pct }}% of Portfolio</span>
+            </div>
+            <p class="text-xs text-muted mt-2">
+                Average expected loss during extreme tail events (the worst 5% of trading days).
+            </p>
+        </div>
+
+        <!-- 3. Annualized Volatility -->
+        <div class="metric-card">
+            <div class="metric-label">Annualized Volatility (252 Days)</div>
+            <div class="metric-value text-accent">{{ risk_report.annualized_volatility }}%</div>
+            <div class="metric-sub">
+                <span>Standard deviation of returns</span>
+            </div>
+        </div>
+
+        <!-- 4. Portfolio Beta to NIFTY 50 -->
+        <div class="metric-card">
+            <div class="metric-label">Systematic Beta (vs NIFTY 50)</div>
+            <div class="metric-value text-accent">{{ risk_report.portfolio_beta }}</div>
+            <div class="metric-sub">
+                <span>Systematic market sensitivity</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance & Drawdown Cards -->
+    <div class="metrics-grid-3 mb-4">
+        <div class="metric-card">
+            <div class="metric-label">Sharpe Ratio (Annualized)</div>
+            <div class="metric-value {% if risk_report.sharpe_ratio >= 1.0 %}text-green{% else %}text-accent{% endif %}">
+                {{ risk_report.sharpe_ratio }}
+            </div>
+            <div class="metric-sub">Excess return per unit of total risk</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Sortino Ratio (Downside Only)</div>
+            <div class="metric-value {% if risk_report.sortino_ratio >= 1.0 %}text-green{% else %}text-accent{% endif %}">
+                {{ risk_report.sortino_ratio }}
+            </div>
+            <div class="metric-sub">Excess return per unit of harmful downside risk</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Historical Maximum Drawdown</div>
+            <div class="metric-value text-red">{{ risk_report.max_drawdown_pct }}%</div>
+            <div class="metric-sub">Peak-to-trough worst decline</div>
+        </div>
+    </div>
+
+    <!-- Per-Asset Risk Breakdown Table -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Holding-Level Risk Contributions & Classification</h2>
+            <span class="badge badge-tag">{{ risk_report.asset_profiles|length }} Assets Evaluated</span>
+        </div>
+        <div class="card-body">
+            {% if risk_report.asset_profiles and risk_report.asset_profiles|length > 0 %}
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Portfolio Weight %</th>
+                            <th>Annualized Volatility</th>
+                            <th>Beta (vs NIFTY)</th>
+                            <th>1-Day 95% VaR</th>
+                            <th>Assigned Risk Label</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in risk_report.asset_profiles %}
+                        <tr>
+                            <td><strong>{{ a.symbol }}</strong></td>
+                            <td>{{ a.weight_pct }}%</td>
+                            <td>{{ a.annualized_volatility }}%</td>
+                            <td>{{ a.beta }}</td>
+                            <td class="text-red">{{ a.var_95_1d_pct }}%</td>
+                            <td>
+                                {% if a.risk_label == 'Low' %}
+                                    <span class="badge badge-buy">LOW RISK</span>
+                                {% elif a.risk_label == 'High' %}
+                                    <span class="badge badge-sell">HIGH RISK</span>
+                                {% else %}
+                                    <span class="badge badge-neutral">MEDIUM RISK</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <p>No risk profile generated. Add holdings to compute portfolio variance and VaR metrics.</p>
+                <a href="/onboarding" class="btn btn-primary-sm mt-2">Add Holdings</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

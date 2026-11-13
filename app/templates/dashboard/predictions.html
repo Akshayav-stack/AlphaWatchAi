@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Algorithmic Predictions — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Calibrated ML predictions, probability confidence, feature reasons, and 6-pillar Screener.in diagnostic badges.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">PREDICTIVE SIGNALS & DIAGNOSTICS</span>
+            <h1 class="page-title mt-1">Holdings Predictions & Fundamental Audit</h1>
+            <p class="text-muted">
+                Zero-lookahead machine learning signals paired with 6-pillar rule-based Screener.in balance sheet verification.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-source">As of: {{ as_of_date }}</span>
+        </div>
+    </div>
+
+    <!-- Educational Warning Banner -->
+    <div class="alert alert-info mb-4">
+        <div>
+            <strong>Educational Research Demonstration:</strong> Signals represent estimated statistical probabilities derived 
+            from historical technical features and financial filings. <strong>This is NOT investment advice or a trade recommendation.</strong>
+        </div>
+    </div>
+
+    <!-- Predictions Cards / Accordion Table -->
+    {% if predictions and predictions|length > 0 %}
+    <div class="prediction-list">
+        {% for p in predictions %}
+        <div class="card mb-4 prediction-card">
+            <div class="card-header prediction-header-flex">
+                <div class="pred-symbol-col">
+                    <span class="pred-symbol">{{ p.symbol }}</span>
+                    <span class="text-muted ml-2">₹{{ "{:,.2f}".format(p.current_price) }}</span>
+                </div>
+
+                <div class="pred-badges-col">
+                    <!-- Signal Badge -->
+                    {% if p.signal == 'BUY' %}
+                        <span class="badge badge-buy">SIGNAL: BUY</span>
+                    {% elif p.signal == 'SELL' %}
+                        <span class="badge badge-sell">SIGNAL: SELL</span>
+                    {% else %}
+                        <span class="badge badge-neutral">SIGNAL: HOLD</span>
+                    {% endif %}
+
+                    <!-- Risk Label Badge -->
+                    {% if p.risk_label == 'Low' %}
+                        <span class="badge badge-buy">RISK: LOW</span>
+                    {% elif p.risk_label == 'High' %}
+                        <span class="badge badge-sell">RISK: HIGH</span>
+                    {% else %}
+                        <span class="badge badge-neutral">RISK: MEDIUM</span>
+                    {% endif %}
+
+                    <!-- Fundamentals Badge -->
+                    {% if p.fundamentals_badge == 'Strong' %}
+                        <span class="badge badge-buy">FUNDAMENTALS: STRONG</span>
+                    {% elif p.fundamentals_badge == 'Weak' %}
+                        <span class="badge badge-sell">FUNDAMENTALS: WEAK</span>
+                    {% else %}
+                        <span class="badge badge-neutral">FUNDAMENTALS: MIXED</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-body">
+                <!-- Probability Bar -->
+                <div class="prob-section mb-3">
+                    <div class="prob-meta-flex">
+                        <span class="prob-label">Upward Price Movement Probability (Close(t+1) &gt; Close(t)):</span>
+                        <strong class="prob-val">{{ p.probability_pct }}%</strong>
+                    </div>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar-fill {% if p.probability_pct >= 55.0 %}fill-green{% elif p.probability_pct <= 45.0 %}fill-red{% else %}fill-yellow{% endif %}" 
+                             style="width: {{ p.probability_pct }}%;">
+                        </div>
+                    </div>
+                    <div class="prob-scale-labels">
+                        <span>0% High Downward Probability</span>
+                        <span>50% Neutral</span>
+                        <span>100% High Upward Probability</span>
+                    </div>
+                </div>
+
+                <!-- Primary Quantitative Reason -->
+                <div class="reason-box mb-3">
+                    <div class="reason-title">Model Quantitative Drivers:</div>
+                    <p class="reason-text">{{ p.reason }}</p>
+                </div>
+
+                <!-- Combined 2x2 Educational Explanation -->
+                <div class="explanation-box mb-3">
+                    <div class="explanation-title">Synthesized Research Evaluation (2x2 Matrix):</div>
+                    <p class="explanation-text"><em>"{{ p.combined_explanation }}"</em></p>
+                </div>
+
+                <!-- Expandable Screener.in Diagnostic Panel (Accordion) -->
+                <div class="accordion-item mt-3">
+                    <button type="button" class="accordion-header" aria-expanded="false">
+                        <span>📋 View Screener.in 6-Pillar Balance Sheet Diagnostic</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="diagnostic-grid p-3">
+                            <div class="diagnostic-meta mb-2">
+                                <strong>Source:</strong> Screener.in Financial Export Workbook | 
+                                <strong>Export Date:</strong> {{ p.fundamentals_export_date }}
+                                {% if p.is_stale %}
+                                    <span class="badge badge-sell ml-2">⚠️ STALE DATA WARNING (&gt;120 Days)</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Pillar</th>
+                                            <th>Metric</th>
+                                            <th>Reported Value</th>
+                                            <th>Threshold Requirement</th>
+                                            <th>Diagnostic Rule Fired</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for diag in p.diagnostic_details %}
+                                        <tr>
+                                            <td><strong>{{ diag.pillar }}</strong></td>
+                                            <td>{{ diag.metric_name }}</td>
+                                            <td>{{ diag.value }}</td>
+                                            <td><span class="text-muted">{{ diag.threshold }}</span></td>
+                                            <td>
+                                                {% if diag.passed %}
+                                                    <span class="badge badge-buy">PASS: {{ diag.rule_fired }}</span>
+                                                {% else %}
+                                                    <span class="badge badge-sell">FAIL: {{ diag.rule_fired }}</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No predictions currently computed for your portfolio. Add holdings to generate intelligence.</p>
+        <a href="/onboarding" class="btn btn-primary-sm mt-2">Configure Holdings</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

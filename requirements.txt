@@ -1,0 +1,20 @@
+# AlphaWatch AI - Dependencies (Pinned)
+# Python 3.11+ compatible
+
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.1
+jinja2>=3.1.4
+python-multipart>=0.0.9
+sqlalchemy>=2.0.30
+pandas>=2.2.2
+numpy>=1.26.4
+openpyxl>=3.1.2
+scikit-learn>=1.5.0
+scipy>=1.10.0
+argon2-cffi>=23.1.0
+slowapi>=0.1.9
+python-dotenv>=1.0.1
+itsdangerous>=2.2.0
+joblib>=1.4.2
+pytest>=8.2.1
+httpx>=0.27.0

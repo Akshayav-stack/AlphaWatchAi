@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Register — AlphaWatch AI{% endblock %}
+{% block meta_description %}Create an offline research account on AlphaWatch AI for ASTRAQUANT X 2026.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="auth-card-wrap">
+        <div class="card auth-card">
+            <div class="card-header text-center">
+                <span class="badge badge-tag">ASTRAQUANT X 2026</span>
+                <h1 class="card-title mt-2">Create Research Account</h1>
+                <p class="text-muted">Register to test leak-free models and portfolio diagnostics</p>
+            </div>
+
+            {% if error_msg %}
+            <div class="alert alert-danger" role="alert">
+                <span class="badge badge-sell">REGISTRATION ERROR</span>
+                <span>{{ error_msg }}</span>
+            </div>
+            {% endif %}
+
+            <div class="card-body">
+                <form method="POST" action="/auth/register" class="form-vertical" autocomplete="off">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            class="form-control" 
+                            placeholder="Enter your full legal name" 
+                            required 
+                            autofocus
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="name@organization.edu" 
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-control" 
+                            placeholder="At least 10 characters" 
+                            required 
+                            minlength="10"
+                        >
+                        <small class="form-hint">Minimum 10 characters. Common passwords (password123, qwerty, etc.) will be rejected.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <input 
+                            type="password" 
+                            id="confirm_password" 
+                            name="confirm_password" 
+                            class="form-control" 
+                            placeholder="Re-enter password" 
+                            required 
+                            minlength="10"
+                        >
+                    </div>
+
+                    <div class="form-group form-check mt-3">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="consent" value="1" required>
+                            <span>I explicitly acknowledge that AlphaWatch AI is strictly an <strong>educational algorithmic research platform</strong> and does NOT provide real investment advice or execute real broker orders.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary btn-block">Complete Registration</button>
+                    </div>
+                </form>
+
+                <div class="auth-footer mt-4 text-center">
+                    <p class="text-muted">
+                        Already have an account? 
+                        <a href="/auth/login" class="text-accent font-weight-bold">Sign In here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

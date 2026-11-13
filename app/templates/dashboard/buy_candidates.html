@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Buy Candidates — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Ranked algorithmic buy candidates aligned with your personalized investor risk profile.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">ALIGNED TO YOUR PATTERN: {{ user_profile.suggested_profile|upper }}</span>
+            <h1 class="page-title mt-1">Profile-Ranked Buy Candidates</h1>
+            <p class="text-muted">
+                Screened from the 12 supported NSE benchmark equities, ranked by algorithmic probability, 
+                fundamental solvency, and risk compatibility with your <strong>{{ user_profile.suggested_profile }}</strong> profile.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-source">As of Date: {{ as_of_date }}</span>
+        </div>
+    </div>
+
+    <!-- Candidate List -->
+    {% if candidates and candidates|length > 0 %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Top Opportunity Ranks for {{ user_profile.suggested_profile }} Strategy</h2>
+            <span class="badge badge-buy">{{ candidates|length }} Opportunities Evaluated</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Symbol</th>
+                            <th>Sector</th>
+                            <th>Current Price</th>
+                            <th>Signal</th>
+                            <th>Probability</th>
+                            <th>Risk Tier</th>
+                            <th>Fundamentals</th>
+                            <th>Profile Fit</th>
+                            <th>Combined Rationale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in candidates %}
+                        <tr>
+                            <td><strong>#{{ loop.index }}</strong></td>
+                            <td><strong>{{ c.symbol }}</strong></td>
+                            <td><span class="text-muted">{{ c.sector }}</span></td>
+                            <td>₹{{ "{:,.2f}".format(c.current_price) }}</td>
+                            <td>
+                                {% if c.signal == 'BUY' %}
+                                    <span class="badge badge-buy">BUY</span>
+                                {% else %}
+                                    <span class="badge badge-neutral">HOLD</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <strong>{{ c.probability_pct }}%</strong>
+                            </td>
+                            <td>
+                                {% if c.risk_label == 'Low' %}
+                                    <span class="badge badge-buy">LOW RISK</span>
+                                {% elif c.risk_label == 'High' %}
+                                    <span class="badge badge-sell">HIGH RISK</span>
+                                {% else %}
+                                    <span class="badge badge-neutral">MED RISK</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if c.fundamentals_badge == 'Strong' %}
+                                    <span class="badge badge-buy">STRONG</span>
+                                {% elif c.fundamentals_badge == 'Weak' %}
+                                    <span class="badge badge-sell">WEAK</span>
+                                {% else %}
+                                    <span class="badge badge-neutral">MIXED</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge badge-tag">{{ c.profile_fit_score }}% Fit</span>
+                            </td>
+                            <td>
+                                <span class="text-sm"><em>"{{ c.reason }}"</em></span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No buy candidates currently meet your profile's risk and fundamental qualification criteria.</p>
+    </div>
+    {% endif %}
+
+    <!-- Research Disclaimer Notice -->
+    <div class="disclaimer-banner mt-4">
+        <p class="text-xs text-muted mb-0">
+            <strong>Mandatory Research Disclaimer:</strong> Candidate rankings are generated purely for algorithmic demonstration. 
+            AlphaWatch AI does not provide real investment advice, tip services, or broker routing.
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}AlphaWatch AI — ASTRAQUANT X 2026 Algorithmic Platform{% endblock %}
+{% block meta_description %}AlphaWatch AI is a self-contained, offline algorithmic trading research platform for the Indian equity market (NSE) built for ASTRAQUANT X 2026.{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container hero-container">
+        <div class="hero-badge-wrap">
+            <span class="badge badge-tag">ASTRAQUANT X 2026 RESEARCH EDITION</span>
+            <span class="badge badge-source">100% OFFLINE DATASET</span>
+        </div>
+        <h1 class="hero-title">
+            Intelligent Algorithmic Signals with <span class="text-accent">Zero Lookahead Bias</span>
+        </h1>
+        <p class="hero-subtitle">
+            A self-contained quantitative research system for the Indian stock market. 
+            Calibrated machine learning predictions combined with an empirical 6-pillar fundamental diagnostic, 
+            computed strictly from saved offline NSE Bhavcopy and Screener.in archives.
+        </p>
+
+        <div class="hero-cta-group">
+            {% if current_user %}
+                <a href="/dashboard" class="btn btn-primary">Open Research Dashboard</a>
+            {% else %}
+                <a href="/auth/register" class="btn btn-primary">Start Research Session</a>
+                <a href="/how-it-works" class="btn btn-outline">Explore Methodology</a>
+            {% endif %}
+        </div>
+
+        <!-- System Status Bar -->
+        <div class="status-strip">
+            <div class="status-item">
+                <span class="status-label">Operational Mode:</span>
+                <span class="status-val text-accent">100% Offline Air-Gapped</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Runtime External Calls:</span>
+                <span class="status-val text-green">0 Network Requests</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Broker APIs:</span>
+                <span class="status-val text-muted">Disabled (Research Only)</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Universe:</span>
+                <span class="status-val text-accent">12 NSE Benchmark Equities</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Core Architecture Pillars -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Engineered for Mathematical & Academic Rigor</h2>
+            <p class="section-desc">AlphaWatch AI eliminates lookahead bias, promotional inflation, and uncalibrated predictions.</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Leak-Free Feature Pipeline</h3>
+                <p class="feature-text">
+                    All 20 quantitative features (RSI 14, SMA/EMA distances, 20-day volatility, delivery ratios) 
+                    are strictly calculated using past data up to day <em>t</em>. Scalers and calibrations are fitted 
+                    strictly on training folds without lookahead contamination.
+                </p>
+                <div class="feature-meta">
+                    <span class="badge badge-buy">PROVEN LEAK-FREE</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">6-Pillar Screener.in Diagnostic</h3>
+                <p class="feature-text">
+                    Transparent rule-based scoring of Valuation, Profitability, Efficiency, Solvency, Growth, 
+                    and Ownership from saved Screener.in workbooks. Sanitized against formula injection and flagged 
+                    if older than 120 days.
+                </p>
+                <div class="feature-meta">
+                    <span class="badge badge-neutral">RULE-BASED AUDIT</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Adaptive Investor Profiling</h3>
+                <p class="feature-text">
+                    Transparent psychometric and portfolio diagnostics. Automatically identifies concentration risk (>30%), 
+                    sector over-exposure (>50%), and dynamically adapts follow-up questions with a plain-language explanation 
+                    of "Why this profile".
+                </p>
+                <div class="feature-meta">
+                    <span class="badge badge-tag">OBJECTIVE MAPPING</span>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Realistic Friction Backtesting</h3>
+                <p class="feature-text">
+                    Strategies execute strictly at next-day Open with realistic Indian equity market friction 
+                    (0.10% STT, 0.03% brokerage, exchange fees, slippage). Long-only delivery modeling with zero short-selling bias.
+                </p>
+                <div class="feature-meta">
+                    <span class="badge badge-buy">REAL FRICTION MODEL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Supported Equities Universe -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Supported NSE Equities Universe</h2>
+            <p class="section-desc">Data ingested directly from official NSE CM-UDiFF Common Bhavcopy archives.</p>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Company Name</th>
+                        <th>Sector</th>
+                        <th>Series</th>
+                        <th>Data Integrity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>RELIANCE</strong></td><td>Reliance Industries Ltd</td><td>Energy & Conglomerate</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>TCS</strong></td><td>Tata Consultancy Services Ltd</td><td>Technology</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>INFY</strong></td><td>Infosys Ltd</td><td>Technology</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>HDFCBANK</strong></td><td>HDFC Bank Ltd</td><td>Financials</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>ICICIBANK</strong></td><td>ICICI Bank Ltd</td><td>Financials</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>SBIN</strong></td><td>State Bank of India</td><td>Financials</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>BHARTIARTL</strong></td><td>Bharti Airtel Ltd</td><td>Telecom</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>ITC</strong></td><td>ITC Ltd</td><td>FMCG</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>LT</strong></td><td>Larsen & Toubro Ltd</td><td>Capital Goods</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>HINDUNILVR</strong></td><td>Hindustan Unilever Ltd</td><td>FMCG</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>BAJFINANCE</strong></td><td>Bajaj Finance Ltd</td><td>Financials</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                    <tr><td><strong>MARUTI</strong></td><td>Maruti Suzuki India Ltd</td><td>Automobile</td><td>EQ</td><td><span class="badge badge-buy">Verified</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

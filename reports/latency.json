@@ -1,0 +1,44 @@
+{
+  "system": {
+    "cpu": "AMD64 Family 25 Model 124 Stepping 0, AuthenticAMD",
+    "cpu_cores": 12,
+    "ram_gb": 15.26,
+    "python_version": "3.14.6",
+    "os": "Windows 11"
+  },
+  "training": {
+    "RandomForestClassifier": {
+      "training_time_ms": 361.43,
+      "training_time_sec": 0.3614,
+      "samples": 1000,
+      "features": 20
+    },
+    "LogisticRegression": {
+      "training_time_ms": 6.67,
+      "training_time_sec": 0.0067,
+      "samples": 1000,
+      "features": 20
+    }
+  },
+  "inference": {
+    "RandomForestClassifier": {
+      "runs": 1000,
+      "mean_latency_ms": 9.3488,
+      "p95_latency_ms": 13.4813,
+      "throughput_preds_per_sec": 106.9
+    },
+    "LogisticRegression": {
+      "runs": 1000,
+      "mean_latency_ms": 0.1909,
+      "p95_latency_ms": 0.3824,
+      "throughput_preds_per_sec": 5218.7
+    }
+  },
+  "end_to_end": {
+    "description": "Raw OHLCV data row -> Feature engineering -> Scaling -> RF inference -> Signal generation",
+    "mean_latency_ms": 24.176,
+    "p95_latency_ms": 30.926,
+    "measured_runs": 200
+  },
+  "benchmarked_at": "2026-11-13 19:40:29"
+}

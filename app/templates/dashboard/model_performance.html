@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Model Performance & Diagnostics — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Walk-forward cross-validation metrics, feature importances, and probability calibration diagnostics.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">MACHINE LEARNING AUDIT</span>
+            <h1 class="page-title mt-1">Model Performance & Calibration</h1>
+            <p class="text-muted">
+                Evaluated across 5-fold expanding walk-forward cross validation and holdout test partitions.
+                All scalers and probability calibrations fitted strictly on training data.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-buy">Zero Lookahead Verified</span>
+        </div>
+    </div>
+
+    {% if has_models and test_metrics %}
+    <!-- Holdout Evaluation Cards -->
+    <div class="metrics-grid mb-4">
+        <div class="metric-card">
+            <div class="metric-label">Holdout Test Accuracy ({{ selected_symbol }})</div>
+            <div class="metric-value text-accent">{{ (test_metrics.accuracy * 100)|round(1) }}%</div>
+            <div class="metric-sub">Final unseen chronological partition</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Holdout ROC-AUC</div>
+            <div class="metric-value text-green">{{ test_metrics.roc_auc|round(3) }}</div>
+            <div class="metric-sub">Rank discrimination quality</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Brier Probability Score</div>
+            <div class="metric-value text-accent">{{ test_metrics.brier_score|round(4) }}</div>
+            <div class="metric-sub">Lower is superior (0.00 = perfect calibration)</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Holdout Precision / Recall</div>
+            <div class="metric-value text-accent">{{ (test_metrics.precision * 100)|round(1) }}% / {{ (test_metrics.recall * 100)|round(1) }}%</div>
+            <div class="metric-sub">F1 Score: {{ test_metrics.f1|round(3) }}</div>
+        </div>
+    </div>
+
+    <!-- Walk-Forward Expanding Cross Validation Breakdown -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <div>
+                <h2 class="card-title">5-Fold Expanding Walk-Forward Cross Validation ({{ selected_symbol }})</h2>
+                <span class="text-muted text-xs">Simulates realistic temporal model retraining over time</span>
+            </div>
+            <span class="badge badge-tag">Chronological Folds</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Fold</th>
+                            <th>Train Window Size</th>
+                            <th>Validation Size</th>
+                            <th>Validation Accuracy</th>
+                            <th>Precision</th>
+                            <th>ROC-AUC</th>
+                            <th>Brier Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for f in cv_folds %}
+                        <tr>
+                            <td><strong>Fold {{ f.fold }}</strong></td>
+                            <td>{{ f.train_size }} bars</td>
+                            <td>{{ f.val_size }} bars</td>
+                            <td><strong>{{ (f.accuracy * 100)|round(1) }}%</strong></td>
+                            <td>{{ (f.precision * 100)|round(1) }}%</td>
+                            <td>{{ f.roc_auc|round(3) }}</td>
+                            <td>{{ f.brier_score|round(4) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Importance & Attribution Table -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <div>
+                <h2 class="card-title">Quantitative Feature Importance (Attribution Weights)</h2>
+                <span class="text-muted text-xs">Derived from Random Forest Gini impurity reduction</span>
+            </div>
+            <span class="badge badge-source">{{ feature_importances|length }} Features Evaluated</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Feature Name</th>
+                            <th>Relative Weight</th>
+                            <th>Importance Bar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fi in feature_importances %}
+                        <tr>
+                            <td><strong>#{{ loop.index }}</strong></td>
+                            <td><code>{{ fi.feature }}</code></td>
+                            <td><strong>{{ (fi.importance * 100)|round(2) }}%</strong></td>
+                            <td style="width: 250px;">
+                                <div class="progress-bar-wrap">
+                                    <div class="progress-bar-fill fill-accent" data-fill="{{ [fi.importance * 400.0, 100.0]|min }}%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- Honest Empty State -->
+    <div class="card empty-state-card text-center mb-4" style="padding: 3rem 1.5rem;">
+        <div class="empty-icon text-muted mb-3" style="font-size: 2.5rem;">📊</div>
+        <h3 class="card-title justify-content-center mb-2">No Saved Model Artifacts Detected</h3>
+        <p class="text-muted max-w-md mx-auto mb-4" style="max-width: 600px; margin: 0 auto 1.5rem;">
+            No trained Random Forest models or JSON Walk-Forward metrics were found in <code>models/saved/</code>. 
+            In compliance with our research principles, AlphaWatch AI never displays simulated or dummy benchmark metrics.
+            Run the offline pipeline helper (<code>train_and_save_symbol_model</code>) using your saved Bhavcopy dataset to generate empirical cross-validation metrics.
+        </p>
+        <div class="empty-actions">
+            <a href="/dashboard" class="btn btn-outline-sm">Return to Overview</a>
+            <a href="/how-it-works" class="btn btn-primary-sm ml-2">Read ML Methodology &rarr;</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Hardware & Model Latency Benchmark Table -->
+    {% if latency_data %}
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <div>
+                <h2 class="card-title">Hardware & Inference Latency Benchmark (time.perf_counter)</h2>
+                <span class="text-muted text-xs">
+                    Host: {{ latency_data.system.cpu }} | RAM: {{ latency_data.system.ram_gb }} GB | Python {{ latency_data.system.python_version }} ({{ latency_data.system.os }})
+                </span>
+            </div>
+            <span class="badge badge-source">Measured at: {{ latency_data.benchmarked_at }}</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container mb-3">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Model Architecture</th>
+                            <th>Training Time (1,000 samples)</th>
+                            <th>Inference Latency (Mean)</th>
+                            <th>95th Percentile Latency</th>
+                            <th>Inference Throughput</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for model_name, inf in latency_data.inference.items() %}
+                        <tr>
+                            <td><strong>{{ model_name }}</strong></td>
+                            <td>
+                                {% if model_name in latency_data.training %}
+                                    {{ latency_data.training[model_name].training_time_ms }} ms ({{ latency_data.training[model_name].training_time_sec }}s)
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td><strong class="text-accent">{{ inf.mean_latency_ms }} ms</strong></td>
+                            <td>{{ inf.p95_latency_ms }} ms</td>
+                            <td><span class="badge badge-buy">{{ inf.throughput_preds_per_sec }} preds/sec</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if latency_data.end_to_end %}
+            <div class="alert alert-info" style="background: #112240; border-left: 3px solid #64FFDA; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.85rem;">
+                <strong>End-to-End Pipeline:</strong> {{ latency_data.end_to_end.description }} &mdash;
+                Mean: <strong>{{ latency_data.end_to_end.mean_latency_ms }} ms</strong> | P95: <strong>{{ latency_data.end_to_end.p95_latency_ms }} ms</strong> (over {{ latency_data.end_to_end.measured_runs }} benchmark iterations).
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Signal Thresholds by Profile Reference -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Investor Profile Signal Probability Thresholds</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Investor Profile</th>
+                            <th>BUY Trigger Probability</th>
+                            <th>HOLD Window</th>
+                            <th>SELL Trigger Probability</th>
+                            <th>Design Rationale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge badge-buy">Conservative</span></td>
+                            <td><strong>P &ge; 60%</strong></td>
+                            <td>40% &lt; P &lt; 60%</td>
+                            <td><strong>P &le; 40%</strong></td>
+                            <td>Demands high conviction to deploy capital; exits quickly on weakness.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-neutral">Moderate</span></td>
+                            <td><strong>P &ge; 55%</strong></td>
+                            <td>45% &lt; P &lt; 55%</td>
+                            <td><strong>P &le; 45%</strong></td>
+                            <td>Balanced threshold with comfortable statistical edge over random walk.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-sell">Aggressive</span></td>
+                            <td><strong>P &ge; 52%</strong></td>
+                            <td>48% &lt; P &lt; 52%</td>
+                            <td><strong>P &le; 48%</strong></td>
+                            <td>Dynamic momentum participation responding to slight upward probability tilts.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

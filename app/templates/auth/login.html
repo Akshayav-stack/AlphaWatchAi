@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Login — AlphaWatch AI{% endblock %}
+{% block meta_description %}Secure login to your AlphaWatch AI algorithmic research workstation.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="auth-card-wrap">
+        <div class="card auth-card">
+            <div class="card-header text-center">
+                <span class="badge badge-tag">RESEARCH ACCESS</span>
+                <h1 class="card-title mt-2">Sign In to AlphaWatch AI</h1>
+                <p class="text-muted">Enter your registered research credentials</p>
+            </div>
+
+            {% if error_msg %}
+            <div class="alert alert-danger" role="alert">
+                <span class="badge badge-sell">AUTH ERROR</span>
+                <span>{{ error_msg }}</span>
+            </div>
+            {% endif %}
+
+            <div class="card-body">
+                <form method="POST" action="/auth/login" class="form-vertical" autocomplete="off">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="Enter your registered email address" 
+                            required 
+                            autofocus
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-control" 
+                            placeholder="Enter your account password" 
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+                </form>
+
+                <div class="auth-footer mt-4 text-center">
+                    <p class="text-muted">
+                        Don't have a research account? 
+                        <a href="/auth/register" class="text-accent font-weight-bold">Register here</a>
+                    </p>
+                    <p class="text-xs text-muted mt-2">
+                        Note: AlphaWatch AI operates offline. There is no email password reset mechanism. 
+                        See <a href="/limitations" class="text-muted underline">Limitations & Disclaimer</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

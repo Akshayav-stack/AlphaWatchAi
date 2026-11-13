@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Market Trends & Macro Regimes — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}NIFTY 50 moving average regime, India VIX percentile, market breadth, and top movers computed strictly from saved NSE data.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">NSE MARKET INTELLIGENCE</span>
+            <h1 class="page-title mt-1">Market Trends & Systematic Regimes</h1>
+            <p class="text-muted">
+                Computed deterministically from saved official NSE archives. 
+                Regimes derived from documented statistical rules, not generative language models.
+            </p>
+        </div>
+        <div class="header-action-group">
+            <span class="badge badge-source">As of: {{ nifty_trend.as_of_date }}</span>
+        </div>
+    </div>
+
+    <!-- Panel 1: NIFTY 50 Moving Average Trend & Chart -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <div>
+                <h2 class="card-title">NIFTY 50 Systematic Trend Analysis</h2>
+                <span class="text-muted text-xs">
+                    Source: <strong>{{ nifty_trend.source_report }}</strong> | As of Date: <strong>{{ nifty_trend.as_of_date }}</strong>
+                </span>
+            </div>
+            <div>
+                {% if nifty_trend.regime_label == 'Uptrend' %}
+                    <span class="badge badge-buy">REGIME: UPTREND</span>
+                {% elif nifty_trend.regime_label == 'Downtrend' %}
+                    <span class="badge badge-sell">REGIME: DOWNTREND</span>
+                {% else %}
+                    <span class="badge badge-neutral">REGIME: SIDEWAYS</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Documented Plain-Language Regime Rule -->
+            <div class="rule-callout mb-3">
+                <strong>Documented Classification Rule:</strong> {{ nifty_trend.regime_rule }}
+            </div>
+
+            <div class="metrics-grid mb-3">
+                <div class="metric-card">
+                    <div class="metric-label">NIFTY 50 Close</div>
+                    <div class="metric-value">₹{{ "{:,.2f}".format(nifty_trend.current_close) }}</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">50-Day SMA</div>
+                    <div class="metric-value">₹{{ "{:,.2f}".format(nifty_trend.sma_50) }}</div>
+                    <div class="metric-sub">
+                        Distance: <strong>{{ nifty_trend.dist_sma_50_pct }}%</strong>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">200-Day SMA</div>
+                    <div class="metric-value">₹{{ "{:,.2f}".format(nifty_trend.sma_200) }}</div>
+                    <div class="metric-sub">
+                        Distance: <strong>{{ nifty_trend.dist_sma_200_pct }}%</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plotly Local Chart -->
+            <div id="nifty-trend-chart" class="chart-container" style="min-height: 400px;"></div>
+        </div>
+    </div>
+
+    <!-- 2 Column Grid: India VIX & Market Breadth -->
+    <div class="dashboard-grid-2 mb-4">
+        <!-- Panel 2: India VIX Regime -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">India VIX & Volatility Regime</h3>
+                    <span class="text-muted text-xs">
+                        Source: <strong>{{ vix_report.source_report }}</strong> | As of: <strong>{{ vix_report.as_of_date }}</strong>
+                    </span>
+                </div>
+                <div>
+                    {% if vix_report.regime_label == 'Low Volatility' %}
+                        <span class="badge badge-buy">LOW VOLATILITY</span>
+                    {% elif 'High' in vix_report.regime_label %}
+                        <span class="badge badge-sell">ELEVATED VOLATILITY</span>
+                    {% else %}
+                        <span class="badge badge-neutral">NORMAL REGIME</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="rule-callout mb-3">
+                    <strong>Rule:</strong> {{ vix_report.regime_rule }}
+                </div>
+                <div class="metrics-grid-2 mb-3">
+                    <div class="metric-card">
+                        <div class="metric-label">Current India VIX</div>
+                        <div class="metric-value">{{ vix_report.current_vix }}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Historical Percentile</div>
+                        <div class="metric-value">{{ vix_report.historical_percentile }}%</div>
+                    </div>
+                </div>
+                <p class="text-sm text-muted">
+                    India VIX measures implied near-term market volatility derived from NIFTY index option prices. 
+                    Levels below 13 denote complacency; levels above 20 signify heightened macroeconomic risk.
+                </p>
+            </div>
+        </div>
+
+        <!-- Panel 3: Market Breadth (Advances vs Declines) -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">NSE Market Breadth</h3>
+                    <span class="text-muted text-xs">
+                        Source: <strong>{{ breadth_report.source_report }}</strong> | As of: <strong>{{ breadth_report.as_of_date }}</strong>
+                    </span>
+                </div>
+                <div>
+                    <span class="badge badge-tag">{{ breadth_report.breadth_status }}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="metrics-grid-3 mb-3">
+                    <div class="metric-card">
+                        <div class="metric-label">Advances</div>
+                        <div class="metric-value text-green">{{ breadth_report.advances }}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Declines</div>
+                        <div class="metric-value text-red">{{ breadth_report.declines }}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">A/D Ratio</div>
+                        <div class="metric-value">{{ breadth_report.ad_ratio }}</div>
+                    </div>
+                </div>
+                <p class="text-sm text-muted">
+                    Computed across all equities traded in the latest saved NSE Bhavcopy. 
+                    An Advance/Decline ratio &gt; 1.0 confirms broad-based buying participation.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel 4: Top Movers & Most Active Turnover -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <div>
+                <h3 class="card-title">Top Movers & Turnover Among Supported Equities</h3>
+                <span class="text-muted text-xs">
+                    Source: <strong>{{ movers_report.source_report }}</strong> | As of: <strong>{{ movers_report.as_of_date }}</strong>
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="dashboard-grid-2">
+                <!-- 1-Day Top Gainers -->
+                <div>
+                    <h4 class="text-sm font-weight-bold mb-2 text-green">▲ 1-Day Top Gainers</h4>
+                    <ul class="movers-list">
+                        {% for m in movers_report.top_gainers_1d %}
+                        <li class="mover-item">
+                            <span class="mover-symbol">{{ m.symbol }}</span>
+                            <span class="mover-change text-green">+{{ m.change_pct }}%</span>
+                            <span class="mover-price">₹{{ "{:,.2f}".format(m.close) }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- 1-Day Top Losers -->
+                <div>
+                    <h4 class="text-sm font-weight-bold mb-2 text-red">▼ 1-Day Top Decliners</h4>
+                    <ul class="movers-list">
+                        {% for m in movers_report.top_losers_1d %}
+                        <li class="mover-item">
+                            <span class="mover-symbol">{{ m.symbol }}</span>
+                            <span class="mover-change text-red">{{ m.change_pct }}%</span>
+                            <span class="mover-price">₹{{ "{:,.2f}".format(m.close) }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel 5: Delivery Percentage Trend Panel -->
+    <div class="card mb-4">
+        <div class="card-header dashboard-header-flex">
+            <div>
+                <h3 class="card-title">Institutional Delivery Trend Monitoring</h3>
+                <span class="text-muted text-xs">
+                    Source: <strong>{{ delivery_report.source_report }}</strong> | As of: <strong>{{ delivery_report.as_of_date }}</strong>
+                </span>
+            </div>
+            <div>
+                {% if 'Accumulation' in delivery_report.delivery_trend_label %}
+                    <span class="badge badge-buy">INSTITUTIONAL ACCUMULATION</span>
+                {% elif 'Distribution' in delivery_report.delivery_trend_label %}
+                    <span class="badge badge-sell">DISTRIBUTION PRESSURE</span>
+                {% else %}
+                    <span class="badge badge-neutral">NORMAL DELIVERY</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="metrics-grid mb-3">
+                <div class="metric-card">
+                    <div class="metric-label">Monitored Symbol</div>
+                    <div class="metric-value">{{ delivery_report.symbol }}</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Latest Delivery %</div>
+                    <div class="metric-value">{{ delivery_report.current_delivery_pct }}%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">20-Day SMA Delivery %</div>
+                    <div class="metric-value">{{ delivery_report.sma_delivery_20_pct }}%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Delivery Ratio</div>
+                    <div class="metric-value">{{ delivery_report.delivery_ratio_20 }}x</div>
+                </div>
+            </div>
+            <p class="text-sm text-muted">
+                Delivery ratio &gt; 1.20 indicates that investors are taking delivery of shares rather than intraday squaring off, 
+                a hallmark of institutional interest.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Inject server-computed series into local Plotly renderer
+    const dates = {{ nifty_trend.dates | tojson }};
+    const closes = {{ nifty_trend.closes | tojson }};
+    const sma50 = {{ nifty_trend.sma_50_series | tojson }};
+    const sma200 = {{ nifty_trend.sma_200_series | tojson }};
+
+    if (dates && dates.length > 0) {
+        renderNiftyTrendChart('nifty-trend-chart', dates, closes, sma50, sma200);
+    }
+});
+</script>
+{% endblock %}

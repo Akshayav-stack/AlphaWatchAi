@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AlphaWatch AI — Algorithmic Market Intelligence{% endblock %}</title>
+    <meta name="description"
+        content="{% block meta_description %}ASTRAQUANT X 2026: AI-powered algorithmic trading research and risk intelligence for the Indian equity market.{% endblock %}">
+
+    <!-- Modern Compressed Vector SVG Favicon + Legacy ICO Fallback -->
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <!-- Offline Stylesheet -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+
+    <!-- Offline Plotly.js Library (Local Asset Only) -->
+    <script src="/static/plotly/plotly.min.js"></script>
+
+    <!-- Main Vanilla JavaScript -->
+    <script src="/static/js/main.js" defer></script>
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="theme-navy">
+    <!-- Top Navigation Bar -->
+    {% include "nav.html" %}
+
+    <!-- Flash Messages / Global Notifications -->
+    {% set flash_error = error_msg %}
+    {% set flash_success = success_msg %}
+    {% if request and 'query_string' in request.scope %}
+    {% if not flash_error and request.query_params.get('error_msg') %}
+    {% set flash_error = request.query_params.get('error_msg') %}
+    {% endif %}
+    {% if not flash_success and request.query_params.get('success_msg') %}
+    {% set flash_success = request.query_params.get('success_msg') %}
+    {% elif request.query_params.get('deleted') %}
+    {% set flash_success = "Your account, portfolio holdings, psychometric pattern, and paper trading ledgers have been
+    permanently deleted from SQLite (Right to Erasure)." %}
+    {% elif request.query_params.get('logout') %}
+    {% set flash_success = "You have been securely signed out of your research session." %}
+    {% elif request.query_params.get('saved') %}
+    {% set flash_success = "Your preferences and portfolio state have been updated successfully." %}
+    {% endif %}
+    {% endif %}
+
+    {% if flash_error %}
+    <div class="alert-container container mt-3">
+        <div class="alert alert-danger" role="alert">
+            <span class="badge badge-sell">NOTICE</span>
+            <span>{{ flash_error }}</span>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if flash_success %}
+    <div class="alert-container container mt-3">
+        <div class="alert alert-success" role="alert">
+            <span class="badge badge-buy">SUCCESS</span>
+            <span>{{ flash_success }}</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Main View Content -->
+    <main id="main-content" class="site-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Site Footer & Educational Disclaimer -->
+    {% include "footer.html" %}
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<header class="site-header">
+    <div class="nav-container">
+        <!-- Site Logo -->
+        <a href="/" class="site-brand" aria-label="AlphaWatch AI Home">
+            <span class="brand-glyph">⬡</span>
+            <span class="brand-name">AlphaWatch<span class="brand-accent">AI</span></span>
+            <span class="badge badge-tag">ASTRAQUANT X 2026</span>
+        </a>
+
+        <!-- Accessible Mobile Toggle Button -->
+        <button id="nav-toggle" class="nav-toggle-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+        </button>
+
+        <!-- Navigation Links -->
+        <nav id="nav-links" class="nav-menu" role="navigation">
+            {% if current_user %}
+                <a href="/dashboard" class="nav-link {% if active_page == 'overview' %}active{% endif %}">Overview</a>
+                <a href="/dashboard/predictions" class="nav-link {% if active_page == 'predictions' %}active{% endif %}">Predictions</a>
+                <a href="/dashboard/buy-candidates" class="nav-link {% if active_page == 'buy_candidates' %}active{% endif %}">Buy Candidates</a>
+                <a href="/dashboard/market-trends" class="nav-link {% if active_page == 'market_trends' %}active{% endif %}">Market Trends</a>
+                <a href="/dashboard/risk" class="nav-link {% if active_page == 'risk' %}active{% endif %}">Risk</a>
+                <a href="/dashboard/backtest" class="nav-link {% if active_page == 'backtest' %}active{% endif %}">Backtest</a>
+                <a href="/dashboard/model-performance" class="nav-link {% if active_page == 'models' %}active{% endif %}">Models</a>
+                <a href="/dashboard/paper-trading" class="nav-link {% if active_page == 'paper_trading' %}active{% endif %}">Paper Trading</a>
+                <a href="/dashboard/auditor" class="nav-link {% if active_page == 'auditor' %}active{% endif %}">Claim Auditor</a>
+                <a href="/dashboard/ripple" class="nav-link {% if active_page == 'ripple' %}active{% endif %}">Ripple Effect</a>
+                <a href="/dashboard/profile" class="nav-link {% if active_page == 'profile' %}active{% endif %}">My Pattern</a>
+                <a href="/dashboard/settings" class="nav-link {% if active_page == 'settings' %}active{% endif %}">Settings</a>
+                
+                <div class="nav-user-ctrl">
+                    <span class="user-greeting">{{ current_user.name }}</span>
+                    <form method="POST" action="/auth/logout" class="inline-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-outline-sm">Logout</button>
+                    </form>
+                </div>
+            {% else %}
+                <a href="/" class="nav-link {% if active_page == 'home' %}active{% endif %}">Home</a>
+                <a href="/how-it-works" class="nav-link {% if active_page == 'how_it_works' %}active{% endif %}">How It Works</a>
+                <a href="/limitations" class="nav-link {% if active_page == 'limitations' %}active{% endif %}">Limitations & Disclaimer</a>
+                <a href="/terms" class="nav-link {% if active_page == 'terms' %}active{% endif %}">Privacy & Terms</a>
+                <a href="/auth/login" class="nav-link {% if active_page == 'login' %}active{% endif %}">Login</a>
+                <a href="/auth/register" class="btn btn-primary-sm">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>

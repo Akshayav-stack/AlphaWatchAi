@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy & Terms of Service — AlphaWatch AI{% endblock %}
+{% block meta_description %}Privacy policy, data retention terms, and Right to Erasure disclosures for AlphaWatch AI.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <div class="page-header">
+        <span class="badge badge-tag">LEGAL & PRIVACY FRAMEWORK</span>
+        <h1 class="page-title">Privacy Policy & Terms of Service</h1>
+        <p class="page-lead">Complete clarity on local data privacy, offline architecture, and instant Right to Erasure.</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">1. Privacy Policy & Local Data Sovereignty</h2>
+            <span class="badge badge-buy">ZERO EXTERNAL TELEMETRY</span>
+        </div>
+        <div class="card-body">
+            <p>
+                AlphaWatch AI is engineered with a strict <strong>Privacy-by-Design</strong> architecture:
+            </p>
+            <ul class="styled-list">
+                <li><strong>Local Storage Only:</strong> All user credentials, portfolio holdings, risk profiles, and paper trading ledgers are stored solely within the local SQLite database on your host machine.</li>
+                <li><strong>No External CDN or Telemetry:</strong> No external analytics (Google Analytics, Mixpanel, etc.) or external CDN scripts are included. Even visualization libraries (Plotly.js) are hosted locally.</li>
+                <li><strong>Secure Password Hashing:</strong> User passwords are hashed using state-of-the-art <code>Argon2id</code> with high memory and iteration parameters. Raw passwords are never persisted.</li>
+                <li><strong>Encrypted Session Cookies:</strong> Authentication state is held in signed, <code>HttpOnly</code>, <code>SameSite=Lax</code> cookies with automated cryptographic tampering defense.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">2. Right to Erasure (Complete Account Deletion)</h2>
+            <span class="badge badge-sell">CASCADING PERMANENT DELETE</span>
+        </div>
+        <div class="card-body">
+            <p>
+                In compliance with strict data protection principles (GDPR Article 17 and Digital Personal Data Protection Act):
+            </p>
+            <ul class="styled-list">
+                <li>Every user has unconditional access to the <strong>"Delete My Account"</strong> action on the Settings page.</li>
+                <li>Triggering account deletion initiates an immediate SQL cascading delete: your user record, holdings, investor profile, and paper trading history are <strong>purged permanently and irrecoverably</strong> from the database.</li>
+                <li>No ghost records, cached profile weights, or soft-deleted identifiers are retained.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">3. Terms of Service & Academic Usage</h2>
+        </div>
+        <div class="card-body">
+            <p>
+                By registering and using AlphaWatch AI, you agree to the following conditions:
+            </p>
+            <ul class="styled-list">
+                <li><strong>Academic Competition Purpose:</strong> The platform is provided solely as an entry for ASTRAQUANT X 2026.</li>
+                <li><strong>No Financial Advice:</strong> All outputs, including model signals, fundamental badges, and risk metrics, are research demonstrations. You will not rely on this platform for real-money securities transactions.</li>
+                <li><strong>No Warranty:</strong> The software is provided "AS IS", without warranties of merchantability, fitness for a particular purpose, or profitability. The development team accepts no liability for financial losses incurred by users.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

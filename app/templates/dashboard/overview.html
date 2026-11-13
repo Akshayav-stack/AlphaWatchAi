@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Portfolio Overview — AlphaWatch AI Dashboard{% endblock %}
+{% block meta_description %}Portfolio mark-to-market valuation, risk tier counter, asset weights, and concentration alerts.{% endblock %}
+
+{% block content %}
+<div class="container section">
+    <!-- Top Action & As-Of Banner -->
+    <div class="dashboard-header-flex mb-4">
+        <div>
+            <span class="badge badge-tag">ASTRAQUANT X 2026 WORKSTATION</span>
+            <h1 class="page-title mt-1">Portfolio Intelligence Overview</h1>
+            <p class="text-muted">
+                Source: <strong>{{ portfolio_data.source_report }}</strong> | As of Date: <strong>{{ portfolio_data.as_of_date }}</strong>
+            </p>
+        </div>
+        <div class="header-action-group">
+            <a href="/onboarding" class="btn btn-outline-sm">✏️ Edit Holdings</a>
+            <a href="/dashboard/predictions" class="btn btn-primary-sm">View Predictions →</a>
+        </div>
+    </div>
+
+    <!-- Concentration & Sector Alerts (if active) -->
+    {% if portfolio_data.concentration_alerts %}
+        {% for alert in portfolio_data.concentration_alerts %}
+        <div class="alert alert-warning mb-3" role="alert">
+            <span class="badge badge-sell">CONCENTRATION ALERT</span>
+            <span><strong>{{ alert.rule }}:</strong> {{ alert.message }}</span>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Top Key Metrics Cards Grid -->
+    <div class="metrics-grid mb-4">
+        <!-- 1. Portfolio Market Value -->
+        <div class="metric-card">
+            <div class="metric-label">Current Market Value</div>
+            <div class="metric-value">₹{{ "{:,.2f}".format(portfolio_data.total_current_value) }}</div>
+            <div class="metric-sub">
+                Cost Basis: ₹{{ "{:,.2f}".format(portfolio_data.total_invested_value) }}
+            </div>
+        </div>
+
+        <!-- 2. Unrealized P&L -->
+        <div class="metric-card">
+            <div class="metric-label">Unrealized Profit / Loss</div>
+            <div class="metric-value {% if portfolio_data.total_unrealized_pnl >= 0 %}text-green{% else %}text-red{% endif %}">
+                {% if portfolio_data.total_unrealized_pnl >= 0 %}+{% endif %}₹{{ "{:,.2f}".format(portfolio_data.total_unrealized_pnl) }}
+            </div>
+            <div class="metric-sub">
+                <span class="badge {% if portfolio_data.total_unrealized_pnl_pct >= 0 %}badge-buy{% else %}badge-sell{% endif %}">
+                    {% if portfolio_data.total_unrealized_pnl_pct >= 0 %}+{% endif %}{{ portfolio_data.total_unrealized_pnl_pct }}%
+                </span>
+                <span>vs Saved Close</span>
+            </div>
+        </div>
+
+        <!-- 3. Investor Profile Badge -->
+        <div class="metric-card">
+            <div class="metric-label">Assigned Investor Profile</div>
+            <div class="metric-value text-accent">{{ user_profile.suggested_profile }}</div>
+            <div class="metric-sub">
+                <span>Risk Score: {{ user_profile.risk_score }}/100</span>
+                <a href="/dashboard/profile" class="text-accent underline ml-2">Why?</a>
+            </div>
+        </div>
+
+        <!-- 4. Top-Right Risk Counter Card (Mandatory Requirement) -->
+        <div class="metric-card">
+            <div class="metric-label">Holdings Risk Distribution</div>
+            <div class="risk-counter-row mt-2">
+                <div class="risk-counter-item">
+                    <span class="badge badge-buy">LOW RISK</span>
+                    <span class="counter-num">{{ risk_counts.low }}</span>
+                </div>
+                <div class="risk-counter-item">
+                    <span class="badge badge-neutral">MED RISK</span>
+                    <span class="counter-num">{{ risk_counts.medium }}</span>
+                </div>
+                <div class="risk-counter-item">
+                    <span class="badge badge-sell">HIGH RISK</span>
+                    <span class="counter-num">{{ risk_counts.high }}</span>
+                </div>
+            </div>
+            <div class="metric-sub text-xs mt-1">
+                Evaluated from 20d volatility & NIFTY beta
+            </div>
+        </div>
+    </div>
+
+    <!-- Holdings Breakdown Table -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Holdings Valuation & Weight Allocation</h2>
+            <span class="badge badge-tag">{{ portfolio_data.holdings|length }} Active Positions</span>
+        </div>
+        <div class="card-body">
+            {% if portfolio_data.holdings and portfolio_data.holdings|length > 0 %}
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Sector</th>
+                            <th>Quantity</th>
+                            <th>Buy Price</th>
+                            <th>Latest Close</th>
+                            <th>Current Value</th>
+                            <th>Weight %</th>
+                            <th>P&L (₹)</th>
+                            <th>Return %</th>
+                            <th>Risk Tier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for h in portfolio_data.holdings %}
+                        <tr>
+                            <td><strong>{{ h.symbol }}</strong></td>
+                            <td><span class="text-muted">{{ h.sector }}</span></td>
+                            <td>{{ h.quantity }}</td>
+                            <td>₹{{ "{:,.2f}".format(h.buy_price) }}</td>
+                            <td>₹{{ "{:,.2f}".format(h.current_price) }}</td>
+                            <td>₹{{ "{:,.2f}".format(h.current_value) }}</td>
+                            <td>
+                                <strong>{{ h.weight_pct }}%</strong>
+                                {% if h.weight_pct > 30.0 %}
+                                    <span class="badge badge-sell" title="Position exceeds 30% concentration limit">CONCENTRATED</span>
+                                {% endif %}
+                            </td>
+                            <td class="{% if h.unrealized_pnl >= 0 %}text-green{% else %}text-red{% endif %}">
+                                {% if h.unrealized_pnl >= 0 %}+{% endif %}₹{{ "{:,.2f}".format(h.unrealized_pnl) }}
+                            </td>
+                            <td>
+                                <span class="badge {% if h.unrealized_pnl_pct >= 0 %}badge-buy{% else %}badge-sell{% endif %}">
+                                    {% if h.unrealized_pnl_pct >= 0 %}+{% endif %}{{ h.unrealized_pnl_pct }}%
+                                </span>
+                            </td>
+                            <td>
+                                {% if h.risk_tier == 'Low' %}
+                                    <span class="badge badge-buy">LOW RISK</span>
+                                {% elif h.risk_tier == 'High' %}
+                                    <span class="badge badge-sell">HIGH RISK</span>
+                                {% else %}
+                                    <span class="badge badge-neutral">MEDIUM RISK</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <p>No holdings found. Please configure your positions to view portfolio risk and predictions.</p>
+                <a href="/onboarding" class="btn btn-primary-sm mt-2">Add Holdings Now</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Quick Navigation Hub -->
+    <div class="card-grid">
+        <a href="/dashboard/predictions" class="action-card">
+            <h3 class="action-title">Algorithmic Predictions →</h3>
+            <p class="action-desc">Calibrated BUY / HOLD / SELL signals with 6-pillar Screener.in checks.</p>
+        </a>
+        <a href="/dashboard/market-trends" class="action-card">
+            <h3 class="action-title">Market Trends & Regimes →</h3>
+            <p class="action-desc">NIFTY 50 moving average regime, India VIX percentile, and market breadth.</p>
+        </a>
+        <a href="/dashboard/risk" class="action-card">
+            <h3 class="action-title">Portfolio Risk Subsystem →</h3>
+            <p class="action-desc">1-day 95% VaR, CVaR, Sharpe ratio, Sortino, and NIFTY 50 beta.</p>
+        </a>
+        <a href="/dashboard/ripple" class="action-card">
+            <h3 class="action-title">Ripple Effect Shock Simulation →</h3>
+            <p class="action-desc">Hypothetical crude oil, rate hike, and systemic shock stress testing.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
