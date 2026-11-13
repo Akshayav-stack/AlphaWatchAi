@@ -292,19 +292,35 @@ def get_predictions(req: PortfolioRequest):
 @app.post("/api/ml/explain-decision")
 def get_explain_decision(body: Dict[str, Any] = Body(...)):
     """Computes Explainable AI decision dossier with local TreeExplainer SHAP values."""
-    from src.explain import explain_trade_decision
+    from src.explain import explain_prediction, explain_trade_decision
     symbol = body.get("symbol", "RELIANCE")
     profile = body.get("profile", "Moderate")
+    holdings_input = body.get("holdings", [])
+
+    holdings_objs = None
+    if holdings_input and isinstance(holdings_input, list):
+        try:
+            holdings_objs = [
+                Holding(symbol=h["symbol"], quantity=int(h["quantity"]), buy_price=float(h["buy_price"]))
+                for h in holdings_input
+            ]
+        except Exception:
+            holdings_objs = None
 
     try:
-        result = explain_trade_decision(symbol=symbol, investor_profile=profile)
-        if result.get("status") == "error":
-            raise HTTPException(status_code=400, detail=result.get("message", "Explanation error"))
-        return result
-    except HTTPException:
-        raise
+        # Use full explain_prediction engine
+        full_res = explain_prediction(symbol=symbol, profile=profile, user_holdings=holdings_objs)
+        # Also include legacy mapped keys for any older consumer
+        wrapper_res = explain_trade_decision(symbol=symbol, investor_profile=profile)
+        full_res["top_features"] = wrapper_res.get("top_features", [])
+        full_res["probability_meter"] = full_res.get("probability_meter", wrapper_res.get("probability_meter", {}))
+        return full_res
+    except ValueError as ve:
+        raise HTTPException(status_code=422, detail=str(ve))
+    except FileNotFoundError as fnf:
+        raise HTTPException(status_code=409, detail=str(fnf))
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/ml/buy-candidates")
 def get_buy_candidates(body: Dict[str, Any] = Body(...)):

@@ -182,19 +182,20 @@ router.get('/explain/:symbol', requireAuth, async (req, res, next) => {
   try {
     const symbol = (req.params.symbol || 'RELIANCE').toUpperCase();
     const profile = getUserProfile(req.user.id);
-    const suggestedProfile = profile?.suggested_profile || 'Moderate';
+    const activeProfile = req.query.profile || profile?.suggested_profile || 'Moderate';
+    const userHoldings = getUserHoldings(req.user.id);
 
     let explanation = null;
     try {
       explanation = await callMl('/api/ml/explain-decision', {
         method: 'POST',
-        body: { symbol, profile: suggestedProfile },
+        body: { symbol, profile: activeProfile, holdings: userHoldings },
       });
     } catch (e) {
       console.warn(`[Explain AI] ML service call failed for ${symbol}:`, e.message);
     }
 
-    if (!explanation || explanation.status !== 'success') {
+    if (!explanation || (explanation.status !== 'success' && !explanation.signal)) {
       return res.status(404).json({
         error: `Could not compute AI explanation for ${symbol}. Please ensure historical data is loaded.`,
       });
