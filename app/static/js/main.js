@@ -98,11 +98,11 @@ function getPlotlyDarkLayout(title, height = 380) {
     return {
         title: {
             text: title,
-            font: { color: '#E2E8F0', size: 14, family: 'Inter, system-ui, sans-serif' },
+            font: { color: '#F8FAFC', size: 14, family: 'Inter, system-ui, sans-serif' },
             x: 0.05
         },
-        paper_bgcolor: '#112240',
-        plot_bgcolor: '#0B1528',
+        paper_bgcolor: '#121824',
+        plot_bgcolor: '#0B0F19',
         margin: { l: 55, r: 25, t: 45, b: 45 },
         height: height,
         autosize: true,
