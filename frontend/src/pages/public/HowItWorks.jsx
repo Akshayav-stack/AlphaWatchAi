@@ -67,31 +67,121 @@ export default function HowItWorks() {
         </p>
       </div>
 
-      {/* Visual 5-Layer Pipeline Flow */}
-      <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
-        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-          5-Layer Data Flow Architecture
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 text-center text-xs">
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
-            <div className="text-blue-400 font-bold mb-1">1. Data Layer</div>
-            <div className="text-[10px] text-slate-400">Offline Bhavcopy CSVs & Manifest</div>
+      {/* 12. System Architecture & Build Plan Diagram */}
+      <div className="p-6 sm:p-8 rounded-2xl bg-[#0e1117] border border-slate-800 space-y-6">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-serif text-slate-100 font-semibold tracking-tight">
+            12. System architecture and build plan
+          </h2>
+          <p className="text-xs sm:text-sm font-bold text-slate-300 mt-1">
+            Five layers turn saved data into a personal, risk-first dashboard
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {/* Layer 1: Data layer */}
+          <div className="p-4 rounded-xl border border-slate-800/80 bg-slate-900/40 space-y-2">
+            <div className="text-xs text-slate-400 font-medium">Data layer</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Saved NSE CSVs</div>
+                <div className="text-xs text-slate-400 mt-0.5">Offline, with source and date</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Validation</div>
+                <div className="text-xs text-slate-400 mt-0.5">Sort, dedupe, check gaps</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Features</div>
+                <div className="text-xs text-slate-400 mt-0.5">Computed from past data only</div>
+              </div>
+            </div>
           </div>
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
-            <div className="text-blue-400 font-bold mb-1">2. Features</div>
-            <div className="text-[10px] text-slate-400">Past-Only Technicals (Zero Lookahead)</div>
+
+          <div className="flex justify-center text-slate-500 text-sm py-0.5">↓</div>
+
+          {/* Layer 2: Model layer */}
+          <div className="p-4 rounded-xl border border-slate-800/80 bg-slate-900/40 space-y-2">
+            <div className="text-xs text-slate-400 font-medium">Model layer: chronological split, scaler fitted on training only</div>
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Logistic Reg.</div>
+                <div className="text-xs text-slate-400 mt-0.5">Baseline</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border-2 border-blue-500 shadow-[0_0_16px_rgba(59,130,246,0.25)] text-center">
+                <div className="text-sm font-bold text-blue-400">Random Forest</div>
+                <div className="text-xs text-slate-300 mt-0.5 font-medium">Main model</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">XGBoost, LSTM</div>
+                <div className="text-xs text-slate-400 mt-0.5">Optional comparison</div>
+              </div>
+              <div className="p-3 bg-slate-950/50 rounded-lg border border-dashed border-slate-700 text-center">
+                <div className="text-sm font-bold text-slate-400">RL agent</div>
+                <div className="text-xs text-slate-500 mt-0.5">Roadmap only</div>
+              </div>
+            </div>
           </div>
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
-            <div className="text-blue-400 font-bold mb-1">3. Models</div>
-            <div className="text-[10px] text-slate-400">Walk-Forward RF & Isotonic Calibration</div>
+
+          <div className="flex justify-center text-slate-500 text-sm py-0.5">↓</div>
+
+          {/* Layer 3: Decision layer */}
+          <div className="p-4 rounded-xl border border-slate-800/80 bg-slate-900/40 space-y-2">
+            <div className="text-xs text-slate-400 font-medium">Decision layer</div>
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Probability</div>
+                <div className="text-xs text-slate-400 mt-0.5">Calibrated, explained</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Signals</div>
+                <div className="text-xs text-slate-400 mt-0.5">Profile thresholds</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Risk labels</div>
+                <div className="text-xs text-slate-400 mt-0.5">Vol, drawdown, VaR</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Backtest</div>
+                <div className="text-xs text-slate-400 mt-0.5">Costs, next-day open</div>
+              </div>
+            </div>
           </div>
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
-            <div className="text-blue-400 font-bold mb-1">4. Decision</div>
-            <div className="text-[10px] text-slate-400">Profile Signals & Positive-Loss VaR</div>
+
+          <div className="flex justify-center text-slate-500 text-sm py-0.5">↓</div>
+
+          {/* Layer 4: App layer */}
+          <div className="p-4 rounded-xl border border-slate-800/80 bg-slate-900/40 space-y-2">
+            <div className="text-xs text-slate-400 font-medium">App layer: FastAPI and SQLite</div>
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Auth + SQLite</div>
+                <div className="text-xs text-slate-400 mt-0.5">Private per-user data</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Profiler</div>
+                <div className="text-xs text-slate-400 mt-0.5">Rule-based pattern</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Paper trading</div>
+                <div className="text-xs text-slate-400 mt-0.5">Simulated orders only</div>
+              </div>
+              <div className="p-3 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+                <div className="text-sm font-bold text-slate-200">Extras</div>
+                <div className="text-xs text-slate-400 mt-0.5">Claim Auditor, Ripple</div>
+              </div>
+            </div>
           </div>
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
-            <div className="text-blue-400 font-bold mb-1">5. Execution</div>
-            <div className="text-[10px] text-slate-400">T+1 Open Fills & STT Friction</div>
+
+          <div className="flex justify-center text-slate-500 text-sm py-0.5">↓</div>
+
+          {/* Layer 5: Presentation */}
+          <div className="p-4 rounded-xl border border-slate-800/80 bg-slate-900/40 space-y-2">
+            <div className="text-xs text-slate-400 font-medium">Presentation</div>
+            <div className="p-3.5 bg-slate-950/90 rounded-lg border border-slate-800 text-center">
+              <div className="text-sm font-bold text-slate-200">Personal dashboard</div>
+              <div className="text-xs text-slate-400 mt-0.5">Overview, predictions, buy candidates, risk, backtest, model performance</div>
+            </div>
           </div>
         </div>
       </div>
