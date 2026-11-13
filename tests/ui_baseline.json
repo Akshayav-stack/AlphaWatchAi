@@ -1,0 +1,1767 @@
+{
+  "home": {
+    "table_cells": [
+      "Symbol",
+      "Company Name",
+      "Sector",
+      "Series",
+      "Data Integrity",
+      "RELIANCE",
+      "Reliance Industries Ltd",
+      "Energy & Conglomerate",
+      "EQ",
+      "Verified",
+      "TCS",
+      "Tata Consultancy Services Ltd",
+      "Technology",
+      "EQ",
+      "Verified",
+      "INFY",
+      "Infosys Ltd",
+      "Technology",
+      "EQ",
+      "Verified",
+      "HDFCBANK",
+      "HDFC Bank Ltd",
+      "Financials",
+      "EQ",
+      "Verified",
+      "ICICIBANK",
+      "ICICI Bank Ltd",
+      "Financials",
+      "EQ",
+      "Verified",
+      "SBIN",
+      "State Bank of India",
+      "Financials",
+      "EQ",
+      "Verified",
+      "BHARTIARTL",
+      "Bharti Airtel Ltd",
+      "Telecom",
+      "EQ",
+      "Verified",
+      "ITC",
+      "ITC Ltd",
+      "FMCG",
+      "EQ",
+      "Verified",
+      "LT",
+      "Larsen & Toubro Ltd",
+      "Capital Goods",
+      "EQ",
+      "Verified",
+      "HINDUNILVR",
+      "Hindustan Unilever Ltd",
+      "FMCG",
+      "EQ",
+      "Verified",
+      "BAJFINANCE",
+      "Bajaj Finance Ltd",
+      "Financials",
+      "EQ",
+      "Verified",
+      "MARUTI",
+      "Maruti Suzuki India Ltd",
+      "Automobile",
+      "EQ",
+      "Verified"
+    ],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "ASTRAQUANT X 2026 RESEARCH EDITION",
+      "100% OFFLINE DATASET",
+      "ASTRAQUANT X 2026 RESEARCH EDITION 100% OFFLINE DATASET",
+      "PROVEN LEAK-FREE",
+      "RULE-BASED AUDIT",
+      "OBJECTIVE MAPPING",
+      "REAL FRICTION MODEL",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "Verified",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [],
+    "link_targets": [
+      "/",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/auth/login",
+      "/auth/register",
+      "/auth/register",
+      "/how-it-works",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "100% OFFLINE DATASET"
+    ]
+  },
+  "how_it_works": {
+    "table_cells": [
+      "Data Source",
+      "Report / Artifact Name",
+      "Saved Storage Location",
+      "Reference As-Of Date",
+      "Integrity Verification",
+      "National Stock Exchange (NSE)",
+      "CM-UDiFF Common Bhavcopy Final ZIP & Security Archives",
+      "data/raw/nse/ & data/processed/",
+      "February 2026 (Saved Offline Archive)",
+      "SHA-256 Validated",
+      "National Stock Exchange (NSE)",
+      "NIFTY 50 Historical Index & India VIX Series",
+      "data/processed/NIFTY50.csv , INDIAVIX.csv",
+      "February 2026 (Daily Close)",
+      "Checked & Sorted",
+      "Screener.in",
+      "Standard Excel Company Financial Workbooks (.xlsx)",
+      "data/raw/screener/",
+      "Q3 FY26 / Latest Reported Balance Sheet",
+      "Formula Sanitized",
+      "AlphaWatch Ingestion Manifest",
+      "data_manifest.csv (Cryptographic Ledger)",
+      "data/processed/data_manifest.csv",
+      "Continuous Offline Append",
+      "Audit Trail"
+    ],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "SYSTEM ARCHITECTURE & METHODOLOGY",
+      "ZERO RUNTIME NETWORK CALLS",
+      "SHA-256 Validated",
+      "Checked & Sorted",
+      "Formula Sanitized",
+      "Audit Trail",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [],
+    "link_targets": [
+      "/",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/auth/login",
+      "/auth/register",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "How It Works — AlphaWatch AI Architecture & Data Sources",
+      "Offline Data Sources & As-Of Reference Dates",
+      "Data Source",
+      "Reference As-Of Date"
+    ]
+  },
+  "limitations": {
+    "table_cells": [],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "MANDATORY RESEARCH DISCLOSURES",
+      "AIR-GAPPED",
+      "OFFLINE ARCHITECTURE",
+      "ZERO PRIVILEGED ROLES",
+      "DATA CAVEAT",
+      "120-DAY WINDOW",
+      "PROBABILISTIC",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [],
+    "link_targets": [
+      "/",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/auth/login",
+      "/auth/register",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "5. Screener.in As-Of Staleness Threshold"
+    ]
+  },
+  "terms": {
+    "table_cells": [],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "LEGAL & PRIVACY FRAMEWORK",
+      "ZERO EXTERNAL TELEMETRY",
+      "CASCADING PERMANENT DELETE",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [],
+    "link_targets": [
+      "/",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/auth/login",
+      "/auth/register",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "login": {
+    "table_cells": [],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "RESEARCH ACCESS",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/login",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "input",
+        "name": "email",
+        "type": "email"
+      },
+      {
+        "tag": "input",
+        "name": "password",
+        "type": "password"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/auth/login",
+      "/auth/register",
+      "/auth/register",
+      "/limitations",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "register": {
+    "table_cells": [],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "ASTRAQUANT X 2026",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [
+      {
+        "name": "consent",
+        "value": "1",
+        "type": "checkbox"
+      }
+    ],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/register",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "input",
+        "name": "name",
+        "type": "text"
+      },
+      {
+        "tag": "input",
+        "name": "email",
+        "type": "email"
+      },
+      {
+        "tag": "input",
+        "name": "password",
+        "type": "password"
+      },
+      {
+        "tag": "input",
+        "name": "confirm_password",
+        "type": "password"
+      },
+      {
+        "tag": "input",
+        "name": "consent",
+        "type": "checkbox"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/auth/login",
+      "/auth/register",
+      "/auth/login",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "onboarding": {
+    "table_cells": [
+      "Stock Symbol",
+      "Quantity (Shares)",
+      "Buy Price (₹)",
+      "Action",
+      "RELIANCE TCS INFY HDFCBANK ICICIBANK SBIN BHARTIARTL ITC LT HINDUNILVR BAJFINANCE MARUTI",
+      "Remove",
+      "Remove",
+      "RELIANCE TCS INFY HDFCBANK ICICIBANK SBIN BHARTIARTL ITC LT HINDUNILVR BAJFINANCE MARUTI",
+      "Remove",
+      "Remove",
+      "Remove",
+      "Remove RELIANCE TCS INFY HDFCBANK ICICIBANK SBIN BHARTIARTL ITC LT HINDUNILVR BAJFINANCE MARUTI Remove"
+    ],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "STEP 1 OF 1 — ADAPTIVE ONBOARDING",
+      "OFFLINE POSITION TRACKER",
+      "TRANSPARENT SCORING",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [
+      {
+        "tag": "option",
+        "value": "RELIANCE"
+      },
+      {
+        "name": "quantity[]",
+        "value": "10",
+        "type": "number"
+      },
+      {
+        "name": "buy_price[]",
+        "value": "2500.0",
+        "type": "number"
+      },
+      {
+        "tag": "option",
+        "value": "TCS"
+      },
+      {
+        "name": "quantity[]",
+        "value": "5",
+        "type": "number"
+      },
+      {
+        "name": "buy_price[]",
+        "value": "3800.0",
+        "type": "number"
+      },
+      {
+        "tag": "option",
+        "value": "Wealth Creation"
+      },
+      {
+        "tag": "option",
+        "value": "3-5 Years"
+      },
+      {
+        "tag": "option",
+        "value": "Intermediate (1-3 Years)"
+      },
+      {
+        "tag": "option",
+        "value": "Monthly"
+      },
+      {
+        "tag": "option",
+        "value": "Hold and observe"
+      },
+      {
+        "tag": "option",
+        "value": "10-25%"
+      },
+      {
+        "name": "preferred_sectors",
+        "value": "Technology, Financials",
+        "type": "text"
+      }
+    ],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "form",
+        "action": "/onboarding",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "select",
+        "name": "symbol[]"
+      },
+      {
+        "tag": "input",
+        "name": "quantity[]",
+        "type": "number"
+      },
+      {
+        "tag": "input",
+        "name": "buy_price[]",
+        "type": "number"
+      },
+      {
+        "tag": "select",
+        "name": "symbol[]"
+      },
+      {
+        "tag": "input",
+        "name": "quantity[]",
+        "type": "number"
+      },
+      {
+        "tag": "input",
+        "name": "buy_price[]",
+        "type": "number"
+      },
+      {
+        "tag": "select",
+        "name": "goal"
+      },
+      {
+        "tag": "select",
+        "name": "horizon"
+      },
+      {
+        "tag": "select",
+        "name": "experience"
+      },
+      {
+        "tag": "select",
+        "name": "trading_frequency"
+      },
+      {
+        "tag": "select",
+        "name": "fall_reaction"
+      },
+      {
+        "tag": "select",
+        "name": "savings_share"
+      },
+      {
+        "tag": "input",
+        "name": "preferred_sectors",
+        "type": "text"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "overview": {
+    "table_cells": [
+      "Symbol",
+      "Sector",
+      "Quantity",
+      "Buy Price",
+      "Latest Close",
+      "Current Value",
+      "Weight %",
+      "P&L (₹)",
+      "Return %",
+      "Risk Tier",
+      "RELIANCE",
+      "Energy & Conglomerate",
+      "10",
+      "₹2,500.00",
+      "₹2,500.00",
+      "₹25,000.00",
+      "56.8% CONCENTRATED",
+      "+₹0.00",
+      "+0.0%",
+      "MEDIUM RISK",
+      "TCS",
+      "Information Technology",
+      "5",
+      "₹3,800.00",
+      "₹3,800.00",
+      "₹19,000.00",
+      "43.2% CONCENTRATED",
+      "+₹0.00",
+      "+0.0%",
+      "MEDIUM RISK"
+    ],
+    "stat_cards": [
+      "₹44,000.00",
+      "Current Market Value ₹44,000.00 Cost Basis: ₹44,000.00",
+      "+₹0.00",
+      "Unrealized Profit / Loss +₹0.00 +0.0% vs Saved Close",
+      "Moderate",
+      "Assigned Investor Profile Moderate Risk Score: 55.0/100 Why?",
+      "Holdings Risk Distribution LOW RISK 0 MED RISK 0 HIGH RISK 0 Evaluated from 20d volatility & NIFTY beta"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "ASTRAQUANT X 2026 WORKSTATION",
+      "CONCENTRATION ALERT",
+      "CONCENTRATION ALERT",
+      "CONCENTRATION ALERT",
+      "+0.0%",
+      "LOW RISK",
+      "MED RISK",
+      "HIGH RISK",
+      "2 Active Positions",
+      "CONCENTRATED",
+      "+0.0%",
+      "MEDIUM RISK",
+      "CONCENTRATED",
+      "+0.0%",
+      "MEDIUM RISK",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/onboarding",
+      "/dashboard/predictions",
+      "/dashboard/profile",
+      "/dashboard/predictions",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/ripple",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "| As of Date:"
+    ]
+  },
+  "predictions": {
+    "table_cells": [
+      "Pillar",
+      "Metric",
+      "Reported Value",
+      "Threshold Requirement",
+      "Diagnostic Rule Fired",
+      "Valuation",
+      "Valuation",
+      "N/A",
+      "P/E valuation metric missing in export.",
+      "FAIL: P/E valuation metric missing in export.",
+      "Profitability (ROE)",
+      "Profitability (ROE)",
+      "N/A",
+      "Return on Equity missing.",
+      "FAIL: Return on Equity missing.",
+      "Efficiency (ROCE)",
+      "Efficiency (ROCE)",
+      "N/A",
+      "Return on Capital Employed missing.",
+      "FAIL: Return on Capital Employed missing.",
+      "Solvency (Debt to Equity)",
+      "Solvency (Debt to Equity)",
+      "N/A",
+      "Debt to Equity ratio missing.",
+      "FAIL: Debt to Equity ratio missing.",
+      "Multi-Year Growth",
+      "Multi-Year Growth",
+      "N/A",
+      "3-Year Sales and Profit growth records missing.",
+      "FAIL: 3-Year Sales and Profit growth records missing.",
+      "Ownership Stability",
+      "Ownership Stability",
+      "N/A",
+      "Promoter shareholding data missing.",
+      "FAIL: Promoter shareholding data missing.",
+      "Pillar",
+      "Metric",
+      "Reported Value",
+      "Threshold Requirement",
+      "Diagnostic Rule Fired",
+      "Valuation",
+      "Valuation",
+      "N/A",
+      "P/E valuation metric missing in export.",
+      "FAIL: P/E valuation metric missing in export.",
+      "Profitability (ROE)",
+      "Profitability (ROE)",
+      "N/A",
+      "Return on Equity missing.",
+      "FAIL: Return on Equity missing.",
+      "Efficiency (ROCE)",
+      "Efficiency (ROCE)",
+      "N/A",
+      "Return on Capital Employed missing.",
+      "FAIL: Return on Capital Employed missing.",
+      "Solvency (Debt to Equity)",
+      "Solvency (Debt to Equity)",
+      "N/A",
+      "Debt to Equity ratio missing.",
+      "FAIL: Debt to Equity ratio missing.",
+      "Multi-Year Growth",
+      "Multi-Year Growth",
+      "N/A",
+      "3-Year Sales and Profit growth records missing.",
+      "FAIL: 3-Year Sales and Profit growth records missing.",
+      "Ownership Stability",
+      "Ownership Stability",
+      "N/A",
+      "Promoter shareholding data missing.",
+      "FAIL: Promoter shareholding data missing."
+    ],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "PREDICTIVE SIGNALS & DIAGNOSTICS",
+      "As of: N/A",
+      "SIGNAL: HOLD",
+      "RISK: MEDIUM",
+      "FUNDAMENTALS: MIXED",
+      "SIGNAL: HOLD RISK: MEDIUM FUNDAMENTALS: MIXED",
+      "⚠️ STALE DATA WARNING (>120 Days)",
+      "FAIL: P/E valuation metric missing in export.",
+      "FAIL: Return on Equity missing.",
+      "FAIL: Return on Capital Employed missing.",
+      "FAIL: Debt to Equity ratio missing.",
+      "FAIL: 3-Year Sales and Profit growth records missing.",
+      "FAIL: Promoter shareholding data missing.",
+      "SIGNAL: HOLD",
+      "RISK: MEDIUM",
+      "FUNDAMENTALS: MIXED",
+      "SIGNAL: HOLD RISK: MEDIUM FUNDAMENTALS: MIXED",
+      "⚠️ STALE DATA WARNING (>120 Days)",
+      "FAIL: P/E valuation metric missing in export.",
+      "FAIL: Return on Equity missing.",
+      "FAIL: Return on Capital Employed missing.",
+      "FAIL: Debt to Equity ratio missing.",
+      "FAIL: 3-Year Sales and Profit growth records missing.",
+      "FAIL: Promoter shareholding data missing.",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "As of: N/A"
+    ]
+  },
+  "buy_candidates": {
+    "table_cells": [
+      "Rank",
+      "Symbol",
+      "Sector",
+      "Current Price",
+      "Signal",
+      "Probability",
+      "Risk Tier",
+      "Fundamentals",
+      "Profile Fit",
+      "Combined Rationale",
+      "#1",
+      "RELIANCE",
+      "Energy & Conglomerate",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#2",
+      "TCS",
+      "Information Technology",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#3",
+      "INFY",
+      "Information Technology",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#4",
+      "HDFCBANK",
+      "Financial Services",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#5",
+      "ICICIBANK",
+      "Financial Services",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#6",
+      "SBIN",
+      "Financial Services",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#7",
+      "BHARTIARTL",
+      "Telecommunications",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#8",
+      "ITC",
+      "FMCG",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#9",
+      "LT",
+      "Infrastructure & Capital Goods",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#10",
+      "HINDUNILVR",
+      "FMCG",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#11",
+      "BAJFINANCE",
+      "Equities",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\"",
+      "#12",
+      "MARUTI",
+      "Equities",
+      "₹0.00",
+      "HOLD",
+      "50.0%",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "\"Price history unavailable. Fundamental data displayed as saved.\""
+    ],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "ALIGNED TO YOUR PATTERN: MODERATE",
+      "As of Date: N/A",
+      "12 Opportunities Evaluated",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "HOLD",
+      "MED RISK",
+      "MIXED",
+      "55% Fit",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "As of Date: N/A"
+    ]
+  },
+  "market_trends": {
+    "table_cells": [],
+    "stat_cards": [
+      "₹0.00",
+      "NIFTY 50 Close ₹0.00",
+      "₹0.00",
+      "50-Day SMA ₹0.00 Distance: 0.00%",
+      "₹0.00",
+      "200-Day SMA ₹0.00 Distance: 0.00%",
+      "0.0",
+      "Current India VIX 0.0",
+      "0.0%",
+      "Historical Percentile 0.0%",
+      "3",
+      "Advances 3",
+      "0",
+      "Declines 0",
+      "3.0",
+      "A/D Ratio 3.0",
+      "RELIANCE",
+      "Monitored Symbol RELIANCE",
+      "0.0%",
+      "Latest Delivery % 0.0%",
+      "0.0%",
+      "20-Day SMA Delivery % 0.0%",
+      "1.0x",
+      "Delivery Ratio 1.0x"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "NSE MARKET INTELLIGENCE",
+      "As of: N/A",
+      "REGIME: SIDEWAYS",
+      "NORMAL REGIME",
+      "Strong Bullish",
+      "NORMAL DELIVERY",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "As of: N/A",
+      "| As of Date:",
+      "| As of:"
+    ]
+  },
+  "risk": {
+    "table_cells": [],
+    "stat_cards": [
+      "₹0.00",
+      "1-Day 95% Value at Risk (VaR) ₹0.00 0.0% of Portfolio On 95 out of 100 trading days, 1-day decline is mathematically expected to not exceed this amount.",
+      "₹0.00",
+      "95% Conditional VaR (Expected Shortfall) ₹0.00 0.0% of Portfolio Average expected loss during extreme tail events (the worst 5% of trading days).",
+      "0.0%",
+      "Annualized Volatility (252 Days) 0.0% Standard deviation of returns",
+      "None",
+      "Systematic Beta (vs NIFTY 50) None Systematic market sensitivity",
+      "0.0",
+      "Sharpe Ratio (Annualized) 0.0 Excess return per unit of total risk",
+      "0.0",
+      "Sortino Ratio (Downside Only) 0.0 Excess return per unit of harmful downside risk",
+      "0.0%",
+      "Historical Maximum Drawdown 0.0% Peak-to-trough worst decline"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "QUANTITATIVE RISK ENGINE",
+      "RBI Repo Rate Benchmark: 6.50%",
+      "0.0% of Portfolio",
+      "0.0% of Portfolio",
+      "0 Assets Evaluated",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/onboarding",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": [
+      "| As of Date:"
+    ]
+  },
+  "backtest": {
+    "table_cells": [
+      "Allocation Model",
+      "Expected Annual Return",
+      "Expected Volatility",
+      "Sharpe Ratio (Rf=6.5%)",
+      "Primary Objective",
+      "Current User Portfolio",
+      "12.0%",
+      "20.0%",
+      "0.28",
+      "Existing Holdings Baseline",
+      "Maximum Sharpe Ratio",
+      "12.0%",
+      "20.0%",
+      "0.28",
+      "Maximizes excess return per unit of volatility",
+      "Minimum Variance Portfolio",
+      "12.0%",
+      "20.0%",
+      "0.28",
+      "Minimizes portfolio risk (variance)",
+      "Risk Parity (Inverse Volatility)",
+      "12.0%",
+      "20.0%",
+      "0.28",
+      "Equalizes risk contribution across holdings",
+      "Equal Weight (1/N)",
+      "12.0%",
+      "20.0%",
+      "0.28",
+      "Unbiased naive allocation benchmark"
+    ],
+    "stat_cards": [
+      "+0.0%",
+      "Total Strategy Return +0.0% Benchmark: 0.0%",
+      "0.0%",
+      "Annualized Return (CAGR) 0.0% Sharpe: 0.0 | Sortino: 0.0",
+      "0.0%",
+      "Maximum Drawdown 0.0% Annual Volatility: 0.0%",
+      "0.0%",
+      "Win Rate & Trades 0.0% 0W / 0L | PF: 0.0"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "QUANTITATIVE SIMULATION",
+      "Zero Lookahead Execution",
+      "Start: N/A | End: N/A",
+      "0 Trades",
+      "30% Concentration Bound Enforced",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [
+      {
+        "tag": "option",
+        "value": "RELIANCE"
+      }
+    ],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "form",
+        "action": "/dashboard/backtest",
+        "method": "GET"
+      },
+      {
+        "tag": "select",
+        "name": "symbol"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "model_performance": {
+    "table_cells": [
+      "Model Architecture",
+      "Training Time (1,000 samples)",
+      "Inference Latency (Mean)",
+      "95th Percentile Latency",
+      "Inference Throughput",
+      "RandomForestClassifier",
+      "361.43 ms (0.3614s)",
+      "9.3488 ms",
+      "13.4813 ms",
+      "106.9 preds/sec",
+      "LogisticRegression",
+      "6.67 ms (0.0067s)",
+      "0.1909 ms",
+      "0.3824 ms",
+      "5218.7 preds/sec",
+      "Investor Profile",
+      "BUY Trigger Probability",
+      "HOLD Window",
+      "SELL Trigger Probability",
+      "Design Rationale",
+      "Conservative",
+      "P ≥ 60%",
+      "40% < P < 60%",
+      "P ≤ 40%",
+      "Demands high conviction to deploy capital; exits quickly on weakness.",
+      "Moderate",
+      "P ≥ 55%",
+      "45% < P < 55%",
+      "P ≤ 45%",
+      "Balanced threshold with comfortable statistical edge over random walk.",
+      "Aggressive",
+      "P ≥ 52%",
+      "48% < P < 52%",
+      "P ≤ 48%",
+      "Dynamic momentum participation responding to slight upward probability tilts."
+    ],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "MACHINE LEARNING AUDIT",
+      "Zero Lookahead Verified",
+      "Measured at: 2026-11-13 19:40:29",
+      "106.9 preds/sec",
+      "5218.7 preds/sec",
+      "Conservative",
+      "Moderate",
+      "Aggressive",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/dashboard",
+      "/how-it-works",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "paper_trading": {
+    "table_cells": [],
+    "stat_cards": [
+      "₹1,000,000.00",
+      "Total Virtual Portfolio Value ₹1,000,000.00 Initial: ₹1,000,000.00",
+      "₹1,000,000.00",
+      "Available Virtual Cash ₹1,000,000.00 Invested Equity: ₹0.00",
+      "+₹0.00",
+      "Total Net Return +₹0.00 +0.0%",
+      "₹0.00 / ₹0.00",
+      "Realized / Unrealized P&L ₹0.00 / ₹0.00 Total STT & Fees Paid: ₹0.00"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "NOTICE",
+      "SUCCESS",
+      "VIRTUAL TRADING WORKSTATION",
+      "Virtual Capital: ₹10,00,000",
+      "ORDER REJECTED",
+      "ORDER EXECUTED",
+      "+0.0%",
+      "Instant Offline Match",
+      "0 Positions",
+      "0 Total Records",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "form",
+        "action": "/dashboard/paper-trading/order",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "select",
+        "name": "symbol"
+      },
+      {
+        "tag": "select",
+        "name": "action"
+      },
+      {
+        "tag": "input",
+        "name": "quantity",
+        "type": "number"
+      },
+      {
+        "tag": "input",
+        "name": "notes",
+        "type": "text"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "auditor": {
+    "table_cells": [],
+    "stat_cards": [
+      "0.0%",
+      "BUY Signal Realized Precision 0.0% 0 Total BUY signals audited",
+      "0.0%",
+      "High-Confidence Hit Rate (>65% Prob) 0.0% Conviction trade realized win rate",
+      "+0.0%",
+      "Average 5-Day Forward Return +0.0% SELL/HOLD Return: 0.0%",
+      "0.25",
+      "Probability Brier Score 0.25 Edge over random baseline: +0.0%"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "HONEST BENCHMARKING",
+      "Audit Rating: Insufficient Data",
+      "0 Audited Claims Displayed",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "ripple": {
+    "table_cells": [
+      "Symbol",
+      "Sector",
+      "Quantity",
+      "Current Price",
+      "Simulated Shock %",
+      "Simulated Price",
+      "Baseline Value",
+      "Simulated Value",
+      "P&L Impact (₹)",
+      "Transmission Rule",
+      "RELIANCE",
+      "Energy & Conglomerate",
+      "10",
+      "₹2,500.00",
+      "-1.5%",
+      "₹2,462.50",
+      "₹25,000.00",
+      "₹24,625.00",
+      "₹-375.00",
+      "Sector sensitivity: Energy & Conglomerate historical transmission under Crude Oil Surge (+20% Brent Spike)",
+      "TCS",
+      "Information Technology",
+      "5",
+      "₹3,800.00",
+      "-1.5%",
+      "₹3,743.00",
+      "₹19,000.00",
+      "₹18,715.00",
+      "₹-285.00",
+      "Sector sensitivity: Information Technology historical transmission under Crude Oil Surge (+20% Brent Spike)"
+    ],
+    "stat_cards": [
+      "₹44,000.00",
+      "Baseline Portfolio Value ₹44,000.00 Current mark-to-market",
+      "₹43,340.00",
+      "Simulated Portfolio Value ₹43,340.00 Post-shock estimated equity",
+      "₹-660.00",
+      "Estimated Portfolio Impact ₹-660.00 -1.5%",
+      "Vulnerability Extreme Ranks Most Vulnerable: RELIANCE (-1.5%) Most Resilient: TCS (-1.5%)"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "HYPOTHETICAL STRESS TESTING",
+      "Educational Research Only",
+      "Economic Mechanism",
+      "-1.5%",
+      "2 Positions Shocked",
+      "-1.5%",
+      "-1.5%",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [
+      {
+        "tag": "option",
+        "value": "crude_oil_spike"
+      }
+    ],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "form",
+        "action": "/dashboard/ripple",
+        "method": "GET"
+      },
+      {
+        "tag": "select",
+        "name": "scenario"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "profile": {
+    "table_cells": [
+      "Questionnaire Dimension",
+      "Your Stated Response",
+      "Deterministic Scoring Rule",
+      "Primary Goal",
+      "Wealth Creation",
+      "Preservation (-15), Wealth Creation (+5), Aggressive Growth (+15)",
+      "Investment Horizon",
+      "3-5 Years",
+      "<1 Year (-10), 1-3 Years (0), 3-5 Years (+5), 5+ Years (+10)",
+      "Market Experience",
+      "Intermediate",
+      "Beginner (-10), Intermediate (0), Advanced (+10)",
+      "Trading Frequency",
+      "Monthly",
+      "Determines dynamic rebalancing and review cycle",
+      "10% Market Decline Reaction",
+      "Hold and observe",
+      "Panic Sell (-20), Trim (-10), Hold (+5), Buy Dip (+15)",
+      "Share of Savings Invested",
+      "10-25%",
+      "<10% (+10), 10-25% (0), 25-50% (-5), >50% (-15)"
+    ],
+    "stat_cards": [
+      "Moderate",
+      "Suggested Investor Profile Moderate Risk Score: 55.0 / 100",
+      "70.0 / 100",
+      "Diversification Score 70.0 / 100 Concentration Status: Balanced",
+      "Balanced Growth & Core Stability",
+      "Recommended Holding Style Balanced Growth & Core Stability Investment Horizon: 3-5 Years",
+      "Technology, Financials",
+      "Preferred Sector Universe Technology, Financials Primary Goal: Wealth Creation"
+    ],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "OBJECTIVE PSYCHOMETRIC ENGINE",
+      "Documented Rule Chain",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/onboarding",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  },
+  "settings": {
+    "table_cells": [],
+    "stat_cards": [],
+    "badges": [
+      "ASTRAQUANT X 2026",
+      "USER DATA & PRIVACY MANAGEMENT",
+      "RIGHT TO ERASURE",
+      "EDUCATIONAL RESEARCH PLATFORM"
+    ],
+    "signal_rows": [],
+    "risk_labels": [],
+    "form_values": [
+      {
+        "name": null,
+        "value": "Dr. Vikram Sarabhai",
+        "type": "text"
+      },
+      {
+        "name": null,
+        "value": "vikram@astraquant.edu",
+        "type": "email"
+      }
+    ],
+    "form_fields": [
+      {
+        "tag": "form",
+        "action": "/auth/logout",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      },
+      {
+        "tag": "form",
+        "action": "/auth/delete-account",
+        "method": "POST"
+      },
+      {
+        "tag": "input",
+        "name": "csrf_token",
+        "type": "hidden"
+      }
+    ],
+    "link_targets": [
+      "/",
+      "/dashboard",
+      "/dashboard/predictions",
+      "/dashboard/buy-candidates",
+      "/dashboard/market-trends",
+      "/dashboard/risk",
+      "/dashboard/backtest",
+      "/dashboard/model-performance",
+      "/dashboard/paper-trading",
+      "/dashboard/auditor",
+      "/dashboard/ripple",
+      "/dashboard/profile",
+      "/dashboard/settings",
+      "/onboarding",
+      "/",
+      "/how-it-works",
+      "/limitations",
+      "/terms",
+      "/limitations"
+    ],
+    "as_of_and_data_sources": []
+  }
+}
