@@ -67,6 +67,35 @@ export default function HowItWorks() {
         </p>
       </div>
 
+      {/* Visual 5-Layer Pipeline Flow */}
+      <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
+        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          5-Layer Data Flow Architecture
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 text-center text-xs">
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
+            <div className="text-blue-400 font-bold mb-1">1. Data Layer</div>
+            <div className="text-[10px] text-slate-400">Offline Bhavcopy CSVs & Manifest</div>
+          </div>
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
+            <div className="text-blue-400 font-bold mb-1">2. Features</div>
+            <div className="text-[10px] text-slate-400">Past-Only Technicals (Zero Lookahead)</div>
+          </div>
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
+            <div className="text-blue-400 font-bold mb-1">3. Models</div>
+            <div className="text-[10px] text-slate-400">Walk-Forward RF & Isotonic Calibration</div>
+          </div>
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
+            <div className="text-blue-400 font-bold mb-1">4. Decision</div>
+            <div className="text-[10px] text-slate-400">Profile Signals & Positive-Loss VaR</div>
+          </div>
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-900/40">
+            <div className="text-blue-400 font-bold mb-1">5. Execution</div>
+            <div className="text-[10px] text-slate-400">T+1 Open Fills & STT Friction</div>
+          </div>
+        </div>
+      </div>
+
       <div className="space-y-6">
         {layers.map((layer) => {
           const Icon = layer.icon;

@@ -38,8 +38,12 @@ coverage/
 *.sqlite
 *.sqlite3
 *.db
+*.db-shm
+*.db-wal
+*.db-journal
 alphawatch.db
 alphawatch_users.db
+alphawatch_test.db
 database.sqlite
 
 # Machine Learning Artifacts (models generated during execution)

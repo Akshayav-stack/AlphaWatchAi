@@ -9,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const [generalError, setGeneralError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
   const { login, isAuthenticated, user } = useAuth();
@@ -17,6 +18,13 @@ export default function Login() {
 
   useEffect(() => {
     document.title = 'Sign In — AlphaWatch AI';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        'content',
+        'Sign in to your private AlphaWatch AI quantitative trading research dashboard.'
+      );
+    }
     if (isAuthenticated) {
       if (user && !user.is_onboarded) {
         navigate('/onboarding', { replace: true });
@@ -44,6 +52,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setGeneralError(null);
+    setSuccessMessage(null);
 
     if (!validate()) return;
 
@@ -51,16 +60,18 @@ export default function Login() {
     try {
       const res = await login(email, password);
       if (res?.user) {
-        if (!res.user.is_onboarded) {
-          navigate('/onboarding');
-        } else {
-          navigate('/dashboard/overview');
-        }
+        setSuccessMessage('Signed in successfully! Loading workstation...');
+        setTimeout(() => {
+          if (!res.user.is_onboarded) {
+            navigate('/onboarding');
+          } else {
+            navigate('/dashboard/overview');
+          }
+        }, 600);
       }
     } catch (err) {
       // Security rule: Generic error message to prevent account enumeration
       setGeneralError(err.message || 'Invalid email or password.');
-    } finally {
       setSubmitting(false);
     }
   };
@@ -82,6 +93,12 @@ export default function Login() {
 
         {generalError && (
           <ErrorMessage title="Authentication Failed" message={generalError} />
+        )}
+        {successMessage && (
+          <div className="p-3 bg-emerald-950/50 border border-emerald-800/60 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <span>{successMessage}</span>
+          </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
